@@ -3,17 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://Xingyu.github.io/categories/</loc>
+    <loc>http://xingyu-romantic.github.io/about/</loc>
+    <lastmod>2020-08-16T14:40:46+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://xingyu-romantic.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://Xingyu.github.io/tags/</loc>
+    <loc>http://xingyu-romantic.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://Xingyu.github.io/</loc>
+    <loc>http://xingyu-romantic.github.io/</loc>
+    <lastmod>2020-08-16T14:40:46+08:00</lastmod>
     <priority>0</priority>
   </url>
   
