@@ -15,13 +15,13 @@
   </url>
   
   <url>
-    <loc>http://xingyu-romantic.github.io/</loc>
+    <loc>http://xingyu-romantic.github.io/tags/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://xingyu-romantic.github.io/tags/</loc>
+    <loc>http://xingyu-romantic.github.io/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
