@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://xingyu-romantic.github.io/sitemap.xml
