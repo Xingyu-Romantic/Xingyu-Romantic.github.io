@@ -1,6 +1,7 @@
 ---
 title: "Tensorflow2_CH1"
 date: 2020-08-24T13:04:48+08:00
+description: "Tensorflow2.0 keras学习"
 draft: false
 ---
 
