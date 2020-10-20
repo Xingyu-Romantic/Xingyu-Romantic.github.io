@@ -1,7 +1,7 @@
 ---
 title: "Numpy_Learning"
 date: 2020-10-20T18:48:08+08:00
-description: ""
+description: "From DataWhale http://datawhale.club/"
 ---
 
 # Numpy 学习
