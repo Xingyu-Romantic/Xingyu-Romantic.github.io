@@ -1,13 +1,5 @@
 ---
-整数数组索引
-
-import numpy as np
-
-a=np.array([[1,2],[3,4],[5,6]])
-b=a[0,0]
-b=2
-print(a[0,0]==b)
-#Falsetitle: "Numpy_Learning"
+title: "Numpy_Learning"
 date: 2020-10-20T18:48:08+08:00
 description: "From DataWhale http://datawhale.club/"
 ---
