@@ -1,5 +1,13 @@
 ---
-title: "Numpy_Learning"
+整数数组索引
+
+import numpy as np
+
+a=np.array([[1,2],[3,4],[5,6]])
+b=a[0,0]
+b=2
+print(a[0,0]==b)
+#Falsetitle: "Numpy_Learning"
 date: 2020-10-20T18:48:08+08:00
 description: "From DataWhale http://datawhale.club/"
 ---
@@ -706,4 +714,295 @@ b = np.array([1, 2, 3, 4, '5'])
 print(b)  # ['1' '2' '3' '4' '5']
 c = np.array([1, 2, 3, 4, 5.0])
 print(c)  # [1. 2. 3. 4. 5.]
+```
+
+## 索引、切片与迭代
+
+### 副本与视图
+
+在 Numpy 中，尤其是在做数组运算或数组操作时，返回结果不是数组的 **副本** 就是 **视图**。
+
+在 Numpy 中，所有赋值运算不会为数组和数组中的任何元素创建副本。
+
+- `numpy.ndarray.copy()` 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据，它们物理内存不在同一位置。
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+y = x
+y[0] = -1
+print(x)
+# [-1  2  3  4  5  6  7  8]
+print(y)
+# [-1  2  3  4  5  6  7  8]
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+y = x.copy()
+y[0] = -1
+print(x)
+# [1 2 3 4 5 6 7 8]
+print(y)
+# [-1  2  3  4  5  6  7  8]
+```
+
+### 索引与切片
+
+#### 整数索引
+
+要获取数组的单个元素，指定元素的索引即可。
+
+#### 切片索引
+
+切片操作是指抽取数组的一部分元素生成新数组。对 python **列表**进行切片操作得到的数组是原数组的**副本**，而对 **Numpy** 数据进行切片操作得到的数组则是指向相同缓冲区的**视图**。
+
+如果想抽取（或查看）数组的一部分，必须使用切片语法，也就是，把几个用冒号（ `start:stop:step` ）隔开的数字置于方括号内。
+
+为了更好地理解切片语法，还应该了解不明确指明起始和结束位置的情况。如省去第一个数字，numpy 会认为第一个数字是0；如省去第二个数字，numpy 则会认为第二个数字是数组的最大索引值；如省去最后一个数字，它将会被理解为1，也就是抽取所有元素而不再考虑间隔。
+
+#### dots索引
+
+NumPy 允许使用`...`表示足够多的冒号来构建完整的索引列表。
+
+比如，如果 `x` 是 5 维数组：
+
+- `x[1,2,...]` 等于 `x[1,2,:,:,:]`
+- `x[...,3]` 等于 `x[:,:,:,:,3]`
+- `x[4,...,5,:]` 等于 `x[4,:,:,5,:]`
+
+```python
+import numpy as np
+
+x = np.random.randint(1, 100, [2, 2, 3])
+print(x)
+# [[[ 5 64 75]
+#   [57 27 31]]
+# 
+#  [[68 85  3]
+#   [93 26 25]]]
+
+print(x[1, ...])
+# [[68 85  3]
+#  [93 26 25]]
+
+print(x[..., 2])
+# [[75 31]
+#  [ 3 25]]
+```
+
+#### 整数数组索引
+
+方括号内传入多个索引值，可以同时选择多个元素。
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+r = [0, 1, 2]
+print(x[r])
+# [1 2 3]
+
+r = [0, 1, -1]
+print(x[r])
+# [1 2 8]
+
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+
+r = [0, 1, 2]
+print(x[r])
+# [[11 12 13 14 15]
+#  [16 17 18 19 20]
+#  [21 22 23 24 25]]
+
+r = [0, 1, -1]
+print(x[r])
+
+# [[11 12 13 14 15]
+#  [16 17 18 19 20]
+#  [31 32 33 34 35]]
+
+r = [0, 1, 2]
+c = [2, 3, 4]
+y = x[r, c]
+print(y)
+# [13 19 25]
+```
+
+`numpy. take(a, indices, axis=None, out=None, mode='raise')` Take elements from an array along an axis.
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+r = [0, 1, 2]
+print(np.take(x, r))
+# [1 2 3]
+
+r = [0, 1, -1]
+print(np.take(x, r))
+# [1 2 8]
+
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+
+r = [0, 1, 2]
+print(np.take(x, r, axis=0))
+# [[11 12 13 14 15]
+#  [16 17 18 19 20]
+#  [21 22 23 24 25]]
+
+r = [0, 1, -1]
+print(np.take(x, r, axis=0))
+# [[11 12 13 14 15]
+#  [16 17 18 19 20]
+#  [31 32 33 34 35]]
+
+r = [0, 1, 2]
+c = [2, 3, 4]
+y = np.take(x, [r, c])
+print(y)
+# [[11 12 13]
+#  [13 14 15]]
+```
+
+应注意：使用切片索引到numpy数组时，生成的数组视图将始终是原始数组的子数组, 但是整数数组索引，不是其子数组，是形成新的数组。 切片索引
+
+```python
+import numpy as np
+
+a=np.array([[1,2],[3,4],[5,6]])
+b=a[0:1,0:1]
+b[0,0]=2
+print(a[0,0]==b)
+#[[True]]
+```
+
+整数数组索引
+
+```python
+import numpy as np
+
+a=np.array([[1,2],[3,4],[5,6]])
+b=a[0,0]
+b=2
+print(a[0,0]==b)
+#False
+```
+
+#### 布尔索引
+
+我们可以通过一个布尔数组来索引目标数组。
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+y = x > 5
+print(y)
+# [False False False False False  True  True  True]
+print(x[x > 5])
+# [6 7 8]
+
+x = np.array([np.nan, 1, 2, np.nan, 3, 4, 5])
+y = np.logical_not(np.isnan(x))
+print(x[y])
+# [1. 2. 3. 4. 5.]
+
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+y = x > 25
+print(y)
+# [[False False False False False]
+#  [False False False False False]
+#  [False False False False False]
+#  [ True  True  True  True  True]
+#  [ True  True  True  True  True]]
+print(x[x > 25])
+# [26 27 28 29 30 31 32 33 34 35]
+```
+
+绘图
+
+```python
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2 * np.pi, 50)
+y = np.sin(x)
+print(len(x))  # 50
+plt.plot(x, y)
+
+mask = y >= 0
+print(len(x[mask]))  # 25
+print(mask)
+'''
+[ True  True  True  True  True  True  True  True  True  True  True  True
+  True  True  True  True  True  True  True  True  True  True  True  True
+  True False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False]
+'''
+plt.plot(x[mask], y[mask], 'bo')
+
+mask = np.logical_and(y >= 0, x <= np.pi / 2)
+print(mask)
+'''
+[ True  True  True  True  True  True  True  True  True  True  True  True
+  True False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False]
+'''
+
+plt.plot(x[mask], y[mask], 'go')
+plt.show()
+```
+
+![](https://i.loli.net/2020/10/22/S5V9r17Am2oMHIu.png)
+
+### 数组迭代
+
+除了for循环，Numpy 还提供另外一种更为优雅的遍历方法。
+
+- `apply_along_axis(func1d, axis, arr)` Apply a function to 1-D slices along the given axis.
+
+```python
+import numpy as np
+
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+
+y = np.apply_along_axis(np.sum, 0, x)
+print(y)  # [105 110 115 120 125]
+y = np.apply_along_axis(np.sum, 1, x)
+print(y)  # [ 65  90 115 140 165]
+
+y = np.apply_along_axis(np.mean, 0, x)
+print(y)  # [21. 22. 23. 24. 25.]
+y = np.apply_along_axis(np.mean, 1, x)
+print(y)  # [13. 18. 23. 28. 33.]
+
+
+def my_func(x):
+    return (x[0] + x[-1]) * 0.5
+
+
+y = np.apply_along_axis(my_func, 0, x)
+print(y)  # [21. 22. 23. 24. 25.]
+y = np.apply_along_axis(my_func, 1, x)
+print(y)  # [13. 18. 23. 28. 33.]
 ```
