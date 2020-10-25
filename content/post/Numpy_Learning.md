@@ -998,3 +998,310 @@ print(y)  # [21. 22. 23. 24. 25.]
 y = np.apply_along_axis(my_func, 1, x)
 print(y)  # [13. 18. 23. 28. 33.]
 ```
+
+## 数组操作
+
+### 更改形状
+
+`numpy.ndarray.shape`表示数组的维度，返回一个元组，这个元组的长度就是维度的数目，即 `ndim` 属性(秩)。
+
+`numpy.ndarray.flat` 将数组转换为一维的迭代器，可以用for访问数组每一个元素。
+
+```python
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+y = x.flat
+print(y)
+# <numpy.flatiter object at 0x0000020F9BA10C60>
+for i in y:
+    print(i, end=' ')
+# 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35
+```
+
+`numpy.ndarray.flatten([order='C'])` 将数组的副本转换为一维数组，并返回。
+
+- order：'C' -- 按行，'F' -- 按列，'A' -- 原顺序，'k' -- 元素在内存中的出现顺序。(简记)
+- order：{'C / F，'A，K}，可选使用此索引顺序读取a的元素。'C'意味着以行大的C风格顺序对元素进行索引，最后一个轴索引会更改F表示以列大的Fortran样式顺序索引元素，其中第一个索引变化最快，最后一个索引变化最快。请注意，'C'和'F'选项不考虑基础数组的内存布局，仅引用轴索引的顺序.A'表示如果a为Fortran，则以类似Fortran的索引顺序读取元素在内存中连续，否则类似C的顺序。“ K”表示按照步序在内存中的顺序读取元素，但步幅为负时反转数据除外。默认情况下，使用Cindex顺序。
+
+`flatten()`函数返回的是拷贝。
+
+```python
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+y = x.flatten()
+print(y)
+# [11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34
+#  35]
+```
+
+`numpy.ravel(a, order='C')`Return a contiguous flattened array.
+
+`ravel()`返回的是视图。
+
+```python
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+y = np.ravel(x)
+print(y)
+# [11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34
+#  35]
+
+y[3] = 0
+print(x)
+# [[11 12 13  0 15]
+#  [16 17 18 19 20]
+#  [21 22 23 24 25]
+#  [26 27 28 29 30]
+#  [31 32 33 34 35]]
+```
+
+`numpy.reshape(a, newshape[, order='C'])`在不更改数据的情况下为数组赋予新的形状。
+
+`reshape()`函数当参数`newshape = [rows,-1]`时，将根据行数自动确定列数。
+
+```python
+x = np.arange(12)
+y = np.reshape(x, [3, 4])
+print(y.dtype)  # int32
+print(y)
+# [[ 0  1  2  3]
+#  [ 4  5  6  7]
+#  [ 8  9 10 11]]
+
+y = np.reshape(x, [3, -1])
+print(y)
+# [[ 0  1  2  3]
+#  [ 4  5  6  7]
+#  [ 8  9 10 11]]
+```
+
+`reshape()`函数当参数`newshape = -1`时，表示将数组降为一维。
+
+```python
+x = np.random.randint(12, size=[2, 2, 3])
+print(x)
+# [[[11  9  1]
+#   [ 1 10  3]]
+# 
+#  [[ 0  6  1]
+#   [ 4 11  3]]]
+y = np.reshape(x, -1)
+print(y)
+# [11  9  1  1 10  3  0  6  1  4 11  3]
+```
+
+### 数组转置
+
+- `numpy.transpose(a, axes=None)` Permute the dimensions of an array.
+- `numpy.ndarray.T` Same as `self.transpose()`, except that self is returned if `self.ndim < 2`.
+
+### 更改维度
+
+当创建一个数组之后，还可以给它增加一个维度，这在矩阵计算中经常会用到。
+
+- `numpy.newaxis = None` `None`的别名，对索引数组很有用。
+
+```python
+x = np.array([1, 2, 9, 4, 5, 6, 7, 8])
+print(x.shape)  # (8,)
+print(x)  # [1 2 9 4 5 6 7 8]
+
+y = x[np.newaxis, :]
+print(y.shape)  # (1, 8)
+print(y)  # [[1 2 9 4 5 6 7 8]]
+
+y = x[:, np.newaxis]
+print(y.shape)  # (8, 1)
+print(y)
+# [[1]
+#  [2]
+#  [9]
+#  [4]
+#  [5]
+#  [6]
+#  [7]
+#  [8]]
+```
+
+ `numpy.squeeze(a, axis=None)` 从数组的形状中删除单维度条目，即把shape中为1的维度去掉。
+
+- `a`表示输入的数组；
+- `axis`用于指定需要删除的维度，但是指定的维度必须为单维度，否则将会报错；
+
+### 数组组合
+
+如果要将两份数据组合到一起，就需要拼接操作。
+
+- `numpy.concatenate((a1, a2, ...), axis=0, out=None)` Join a sequence of arrays along an existing axis.
+
+```python
+x = np.array([1, 2, 3])
+y = np.array([7, 8, 9])
+z = np.concatenate([x, y])
+print(z)
+# [1 2 3 7 8 9]
+
+z = np.concatenate([x, y], axis=0)
+print(z)
+# [1 2 3 7 8 9]
+```
+
+`numpy.stack(arrays, axis=0, out=None)`Join a sequence of arrays along a new axis.
+
+```python
+x = np.array([1, 2, 3])
+y = np.array([7, 8, 9])
+z = np.stack([x, y])
+print(z.shape)  # (2, 3)
+print(z)
+# [[1 2 3]
+#  [7 8 9]]
+
+z = np.stack([x, y], axis=1)
+print(z.shape)  # (3, 2)
+print(z)
+# [[1 7]
+#  [2 8]
+#  [3 9]]
+```
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3]).reshape(1, 3)
+y = np.array([7, 8, 9]).reshape(1, 3)
+z = np.stack([x, y])
+print(z.shape)  # (2, 1, 3)
+print(z)
+# [[[1 2 3]]
+#
+#  [[7 8 9]]]
+
+z = np.stack([x, y], axis=1)
+print(z.shape)  # (1, 2, 3)
+print(z)
+# [[[1 2 3]
+#   [7 8 9]]]
+
+z = np.stack([x, y], axis=2)
+print(z.shape)  # (1, 3, 2)
+print(z)
+# [[[1 7]
+#   [2 8]
+#   [3 9]]]
+```
+
+- `numpy.vstack(tup)`Stack arrays in sequence vertically (row wise).
+- `numpy.hstack(tup)`Stack arrays in sequence horizontally (column wise).
+
+### 数组拆分
+
+`numpy.split(ary, indices_or_sections, axis=0)` Split an array into multiple sub-arrays as views into ary.
+
+```python
+import numpy as np
+
+x = np.array([[11, 12, 13, 14],
+              [16, 17, 18, 19],
+              [21, 22, 23, 24]])
+y = np.split(x, [1, 3])
+print(y)
+# [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19],
+#        [21, 22, 23, 24]]), array([], shape=(0, 4), dtype=int32)]
+
+y = np.split(x, [1, 3], axis=1)
+print(y)
+# [array([[11],
+#        [16],
+#        [21]]), array([[12, 13],
+#        [17, 18],
+#        [22, 23]]), array([[14],
+#        [19],
+#        [24]])]
+```
+
+`numpy.vsplit(ary, indices_or_sections)` Split an array into multiple sub-arrays vertically (row-wise).
+
+垂直切分是把数组按照高度切分
+
+```python
+import numpy as np
+
+x = np.array([[11, 12, 13, 14],
+              [16, 17, 18, 19],
+              [21, 22, 23, 24]])
+y = np.vsplit(x, 3)
+print(y)
+# [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19]]), array([[21, 22, 23, 24]])]
+
+y = np.split(x, [1, 3], axis=0)
+print(y)
+# [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19],
+#        [21, 22, 23, 24]]), array([], shape=(0, 4), dtype=int32)]
+```
+
+`numpy.hsplit(ary, indices_or_sections)` Split an array into multiple sub-arrays horizontally (column-wise).
+
+### 数组平铺
+
+- `numpy.tile(A, reps)` Construct an array by repeating A the number of times given by reps.
+
+`tile`是瓷砖的意思，顾名思义，这个函数就是把数组像瓷砖一样铺展开来。
+
+将原矩阵横向、纵向地复制。
+
+```python
+import numpy as np
+
+x = np.array([[1, 2], [3, 4]])
+print(x)
+# [[1 2]
+#  [3 4]]
+
+y = np.tile(x, (1, 3))
+print(y)
+# [[1 2 1 2 1 2]
+#  [3 4 3 4 3 4]]
+
+y = np.tile(x, (3, 1))
+print(y)
+# [[1 2]
+#  [3 4]
+#  [1 2]
+#  [3 4]
+#  [1 2]
+#  [3 4]]
+
+y = np.tile(x, (3, 3))
+print(y)
+# [[1 2 1 2 1 2]
+#  [3 4 3 4 3 4]
+#  [1 2 1 2 1 2]
+#  [3 4 3 4 3 4]
+#  [1 2 1 2 1 2]
+#  [3 4 3 4 3 4]]
+```
+
+### 添加和删除元素
+
+`numpy.unique(ar, return_index=False, return_inverse=False,return_counts=False, axis=None)` Find the unique elements of an array.
+
+- return_index：the indices of the input array that give the unique values
+- return_inverse：the indices of the unique array that reconstruct the input array
+- return_counts：the number of times each unique value comes up in the input array
+
+```python
+a=np.array([1,1,2,3,3,4,4])
+b=np.unique(a,return_counts=True)
+print(b[0][list(b[1]).index(1)])
+#2
+```
