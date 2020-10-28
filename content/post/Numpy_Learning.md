@@ -1305,3 +1305,299 @@ b=np.unique(a,return_counts=True)
 print(b[0][list(b[1]).index(1)])
 #2
 ```
+
+## 数学函数
+
+- `numpy.add(x1, x2, *args, **kwargs)` Add arguments element-wise.
+- `numpy.subtract(x1, x2, *args, **kwargs)` Subtract arguments element-wise.
+- `numpy.multiply(x1, x2, *args, **kwargs)` Multiply arguments element-wise.
+- `numpy.divide(x1, x2, *args, **kwargs)` Returns a true division of the inputs, element-wise.
+- `numpy.floor_divide(x1, x2, *args, **kwargs)` Return the largest integer smaller or equal to the division of the inputs.
+- `numpy.power(x1, x2, *args, **kwargs)` First array elements raised to powers from second array, element-wise.
+
+- `numpy.sqrt(x, *args, **kwargs)` Return the non-negative square-root of an array, element-wise.
+- `numpy.square(x, *args, **kwargs)` Return the element-wise square of the input.
+
+- `numpy.sin(x, *args, **kwargs)` Trigonometric sine, element-wise.
+- `numpy.cos(x, *args, **kwargs)` Cosine element-wise.
+- `numpy.tan(x, *args, **kwargs)` Compute tangent element-wise.
+- `numpy.arcsin(x, *args, **kwargs)` Inverse sine, element-wise.
+- `numpy.arccos(x, *args, **kwargs)` Trigonometric inverse cosine, element-wise.
+- `numpy.arctan(x, *args, **kwargs)` Trigonometric inverse tangent, element-wise.
+
+- `numpy.exp(x, *args, **kwargs)` Calculate the exponential of all elements in the input array.
+- `numpy.log(x, *args, **kwargs)` Natural logarithm, element-wise.
+- `numpy.exp2(x, *args, **kwargs)` Calculate `2**p` for all `p` in the input array.
+- `numpy.log2(x, *args, **kwargs)` Base-2 logarithm of `x`.
+- `numpy.log10(x, *args, **kwargs)` Return the base 10 logarithm of the input array, element-wise.
+
+### 加法函数、乘法函数
+
+#### numpy.sum
+
+- `numpy.sum(a[, axis=None, dtype=None, out=None, …])` Sum of array elements over a given axis.
+
+通过不同的 `axis`，numpy 会沿着不同的方向进行操作：如果不设置，那么对所有的元素操作；如果`axis=0`，则沿着纵轴进行操作；`axis=1`，则沿着横轴进行操作。但这只是简单的二位数组，如果是多维的呢？可以总结为一句话：设`axis=i`，则 numpy 沿着第`i`个下标变化的方向进行操作。
+
+#### numpy.cumsum
+
+- `numpy.cumsum(a, axis=None, dtype=None, out=None)` Return the cumulative sum of the elements along a given axis.
+
+**聚合函数** 是指对一组值（比如一个数组）进行操作，返回一个单一值作为结果的函数。因而，求数组所有元素之和的函数就是聚合函数。`ndarray`类实现了多个这样的函数。
+
+#### numpy.prod 乘积
+
+- `numpy.prod(a[, axis=None, dtype=None, out=None, …])` Return the product of array elements over a given axis.
+
+#### numpy.cumprod 累乘
+
+- `numpy.cumprod(a, axis=None, dtype=None, out=None)` Return the cumulative product of elements along a given axis.
+
+#### numpy.diff 差值
+
+- ```
+  numpy.diff(a, n=1, axis=-1, prepend=np._NoValue, append=np._NoValue)
+  ```
+
+   
+
+  Calculate the n-th discrete difference along the given axis.
+
+  - a：输入矩阵
+  - n：可选，代表要执行几次差值
+  - axis：默认是最后一个
+
+The first difference is given by `out[i] = a[i+1] - a[i]` along the given axis, higher differences are calculated by using `diff` recursively.
+
+#### 四舍五入
+
+`numpy.around(a, decimals=0, out=None)` Evenly round to the given number of decimals.
+
+#### numpy.ceil 上限
+
+#### numpy.floor 下限
+
+- `numpy.ceil(x, *args, **kwargs)` Return the ceiling of the input, element-wise.
+- `numpy.floor(x, *args, **kwargs)` Return the floor of the input, element-wise.
+
+```python
+x = np.random.rand(3, 3) * 10
+print(x)
+# [[0.67847795 1.33073923 4.53920122]
+#  [7.55724676 5.88854047 2.65502046]
+#  [8.67640444 8.80110812 5.97528726]]
+
+y = np.ceil(x)
+print(y)
+# [[1. 2. 5.]
+#  [8. 6. 3.]
+#  [9. 9. 6.]]
+
+y = np.floor(x)
+print(y)
+# [[0. 1. 4.]
+#  [7. 5. 2.]
+#  [8. 8. 5.]]
+```
+
+### 杂项
+
+#### numpy.clip 裁剪
+
+- `numpy.clip(a, a_min, a_max, out=None, **kwargs):` Clip (limit) the values in an array.
+
+```python
+x = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28, 29, 30],
+              [31, 32, 33, 34, 35]])
+y = np.clip(x, a_min=20, a_max=30)
+print(y)
+# [[20 20 20 20 20]
+#  [20 20 20 20 20]
+#  [21 22 23 24 25]
+#  [26 27 28 29 30]
+#  [30 30 30 30 30]]
+```
+
+#### numpy.absolute 绝对值
+
+#### numpy.abs
+
+- `numpy.absolute(x, *args, **kwargs)` Calculate the absolute value element-wise.
+- `numpy.abs(x, *args, **kwargs)` is a shorthand for this function.
+
+```python
+x = np.arange(-5, 5)
+print(x)
+# [-5 -4 -3 -2 -1  0  1  2  3  4]
+
+y = np.abs(x)
+print(y)
+# [5 4 3 2 1 0 1 2 3 4]
+
+y = np.absolute(x)
+print(y)
+# [5 4 3 2 1 0 1 2 3 4]
+```
+
+#### numpy.sign 返回数字符号的逐元素指示
+
+- `numpy.sign(x, *args, **kwargs)` Returns an element-wise indication of the sign of a number.
+
+```python
+x = np.arange(-5, 5)
+print(x)
+#[-5 -4 -3 -2 -1  0  1  2  3  4]
+print(np.sign(x))
+#[-1 -1 -1 -1 -1  0  1  1  1  1]
+```
+
+## 逻辑函数
+
+#### 真值测试
+
+- `numpy.all(a, axis=None, out=None, keepdims=np._NoValue)` Test whether all array elements along a given axis evaluate to True.
+- `numpy.any(a, axis=None, out=None, keepdims=np._NoValue)` Test whether any array element along a given axis evaluates to True.
+
+```python
+a = np.array([0, 4, 5])
+b = np.copy(a)
+print(np.all(a == b))  # True
+print(np.any(a == b))  # True
+
+b[0] = 1
+print(np.all(a == b))  # False
+print(np.any(a == b))  # True
+
+print(np.all([1.0, np.nan]))  # True
+print(np.any([1.0, np.nan]))  # True
+
+a = np.eye(3)
+print(np.all(a, axis=0))  # [False False False]
+print(np.any(a, axis=0))  # [ True  True  True]
+```
+
+#### 数字内容
+
+- `numpy.isnan(x, *args, **kwargs)` Test element-wise for NaN and return result as a boolean array.
+
+【例】
+
+```python
+a=np.array([1,2,np.nan])
+print(np.isnan(a))
+#[False False  True]
+```
+
+#### 逻辑运算
+
+- `numpy.logical_not(x, *args, **kwargs)`Compute the truth value of NOT x element-wise.
+- `numpy.logical_and(x1, x2, *args, **kwargs)` Compute the truth value of x1 AND x2 element-wise.
+- `numpy.logical_or(x1, x2, *args, **kwargs)`Compute the truth value of x1 OR x2 element-wise.
+- `numpy.logical_xor(x1, x2, *args, **kwargs)`Compute the truth value of x1 XOR x2, element-wise.
+
+```python
+print(np.logical_not(3))  
+# False
+print(np.logical_not([True, False, 0, 1]))
+# [False  True  True False]
+
+x = np.arange(5)
+print(np.logical_not(x < 3))
+# [False False False  True  True]
+
+【例】计算x1 AND x2元素的真值。
+
+print(np.logical_and(True, False))  
+# False
+print(np.logical_and([True, False], [True, False]))
+# [ True False]
+print(np.logical_and(x > 1, x < 4))
+# [False False  True  True False]
+
+【例】逐元素计算x1 OR x2的真值。
+
+
+print(np.logical_or(True, False))
+# True
+print(np.logical_or([True, False], [False, False]))
+# [ True False]
+print(np.logical_or(x < 1, x > 3))
+# [ True False False False  True]
+
+【例】计算x1 XOR x2的真值，按元素计算。
+
+print(np.logical_xor(True, False))
+# True
+print(np.logical_xor([True, True, False, False], [True, False, True, False]))
+# [False  True  True False]
+print(np.logical_xor(x < 1, x > 3))
+# [ True False False False  True]
+print(np.logical_xor(0, np.eye(2)))
+# [[ True False]
+#  [False  True]]
+```
+
+#### 对照
+
+- `numpy.greater(x1, x2, *args, **kwargs)` Return the truth value of (x1 > x2) element-wise.
+- `numpy.greater_equal(x1, x2, *args, **kwargs)` Return the truth value of (x1 >= x2) element-wise.
+- `numpy.equal(x1, x2, *args, **kwargs)` Return (x1 == x2) element-wise.
+- `numpy.not_equal(x1, x2, *args, **kwargs)` Return (x1 != x2) element-wise.
+- `numpy.less(x1, x2, *args, **kwargs)` Return the truth value of (x1 < x2) element-wise.
+- `numpy.less_equal(x1, x2, *args, **kwargs)` Return the truth value of (x1 =< x2) element-wise.
+
+```python
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+
+y = x > 2
+print(y)
+print(np.greater(x, 2))
+# [False False  True  True  True  True  True  True]
+
+y = x >= 2
+print(y)
+print(np.greater_equal(x, 2))
+# [False  True  True  True  True  True  True  True]
+
+y = x == 2
+print(y)
+print(np.equal(x, 2))
+# [False  True False False False False False False]
+
+y = x != 2
+print(y)
+print(np.not_equal(x, 2))
+# [ True False  True  True  True  True  True  True]
+
+y = x < 2
+print(y)
+print(np.less(x, 2))
+# [ True False False False False False False False]
+
+y = x <= 2
+print(y)
+print(np.less_equal(x, 2))
+# [ True  True False False False False False False]
+```
+
+- `numpy.isclose(a, b, rtol=1.e-5, atol=1.e-8, equal_nan=False)` Returns a boolean array where two arrays are element-wise equal within a tolerance.
+- `numpy.allclose(a, b, rtol=1.e-5, atol=1.e-8, equal_nan=False)` Returns True if two arrays are element-wise equal within a tolerance.
+
+`numpy.allclose()` 等价于 `numpy.all(isclose(a, b, rtol=rtol, atol=atol, equal_nan=equal_nan))`。
+
+The tolerance values are positive, typically very small numbers. The relative difference (`rtol * abs(b)`) and the absolute difference `atol` are added together to compare against the absolute difference between `a` and `b`.
+
+判断是否为True的计算依据：
+
+```python
+np.absolute(a - b) <= (atol + rtol * absolute(b))
+
+- atol：float，绝对公差。
+- rtol：float，相对公差。
+```
+
+NaNs are treated as equal if they are in the same place and if `equal_nan=True`. Infs are treated as equal if they are in the same place and of the same sign in both arrays.
+
