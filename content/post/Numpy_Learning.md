@@ -1601,3 +1601,202 @@ np.absolute(a - b) <= (atol + rtol * absolute(b))
 
 NaNs are treated as equal if they are in the same place and if `equal_nan=True`. Infs are treated as equal if they are in the same place and of the same sign in both arrays.
 
+## 排序，搜索和计数
+
+### 排序
+
+`numpy.sort(a[, axis=-1, kind='quicksort', order=None])` Return a sorted **copy** of an array.
+
+- axis：排序沿数组的（轴）方向，0表示按行，1表示按列，None表示展开来排序，默认为-1，表示沿最后的轴排序。
+- kind：排序的算法，提供了快排'quicksort'、混排'mergesort'、堆排'heapsort'， 默认为‘quicksort'。
+- order：排序的字段名，可指定字段排序，默认为None。
+
+
+
+- `numpy.argsort(a[, axis=-1, kind='quicksort', order=None])` Returns the indices that would sort an array.
+
+
+
+- `numpy.lexsort(keys[, axis=-1])` Perform an indirect stable sort using a sequence of keys.（使用键序列执行间接稳定排序。）
+- 给定多个可以在电子表格中解释为列的排序键，lexsort返回一个整数索引数组，该数组描述了按多个列排序的顺序。序列中的最后一个键用于主排序顺序，倒数第二个键用于辅助排序顺序，依此类推。keys参数必须是可以转换为相同形状的数组的对象序列。如果为keys参数提供了2D数组，则将其行解释为排序键，并根据最后一行，倒数第二行等进行排序。
+
+
+
+- `numpy.partition(a, kth, axis=-1, kind='introselect', order=None)` Return a partitioned copy of an array.
+
+Creates a copy of the array with its elements rearranged in such a way that the value of the element in k-th position is in the position it would be in a sorted array. All elements smaller than the k-th element are moved before this element and all equal or greater are moved behind it. The ordering of the elements in the two partitions is undefined.
+
+- `numpy.argpartition(a, kth, axis=-1, kind='introselect', order=None)`
+
+Perform an indirect partition along the given axis using the algorithm specified by the `kind` keyword. It returns an array of indices of the same shape as `a` that index data along the given axis in partitioned order.
+
+### 搜索
+
+`numpy.argmax(a[, axis=None, out=None])`Returns the indices of the maximum values along an axis.
+
+`numpy.argmin(a[, axis=None, out=None])`Returns the indices of the minimum values along an axis.
+
+`numppy.nonzero(a)` Return the indices of the elements that are non-zero.
+
+```python
+import numpy as np
+
+x = np.array([0, 2, 3])
+print(x)  # [0 2 3]
+print(x.shape)  # (3,)
+print(x.ndim)  # 1
+
+y = np.nonzero(x)
+print(y)  # (array([1, 2], dtype=int64),)
+print(np.array(y))  # [[1 2]]
+print(np.array(y).shape)  # (1, 2)
+print(np.array(y).ndim)  # 2
+print(np.transpose(y))
+# [[1]
+#  [2]]
+print(x[np.nonzero(x)])
+#[2, 3]
+```
+
+- `numpy.where(condition, [x=None, y=None])` Return elements chosen from `x` or `y` depending on `condition`.
+
+【例】满足条件`condition`，输出`x`，不满足输出`y`。
+
+`numpy.searchsorted(a, v[, side='left', sorter=None])` Find indices where elements should be inserted to maintain order.
+
+- a：一维输入数组。当`sorter`参数为`None`的时候，`a`必须为升序数组；否则，`sorter`不能为空，存放`a`中元素的`index`，用于反映`a`数组的升序排列方式。
+- v：插入`a`数组的值，可以为单个元素，`list`或者`ndarray`。
+- side：查询方向，当为`left`时，将返回第一个符合条件的元素下标；当为`right`时，将返回最后一个符合条件的元素下标。
+- sorter：一维数组存放`a`数组元素的 index，index 对应元素为升序。
+
+```python
+import numpy as np
+
+x = np.array([0, 1, 5, 9, 11, 18, 26, 33])
+y = np.searchsorted(x, 15)
+print(y)  # 5
+
+y = np.searchsorted(x, 15, side='right')
+print(y)  # 5
+
+y = np.searchsorted(x, -1)
+print(y)  # 0
+
+y = np.searchsorted(x, -1, side='right')
+print(y)  # 0
+
+y = np.searchsorted(x, 35)
+print(y)  # 8
+
+y = np.searchsorted(x, 35, side='right')
+print(y)  # 8
+
+y = np.searchsorted(x, 11)
+print(y)  # 4
+
+y = np.searchsorted(x, 11, side='right')
+print(y)  # 5
+
+y = np.searchsorted(x, 0)
+print(y)  # 0
+
+y = np.searchsorted(x, 0, side='right')
+print(y)  # 1
+
+y = np.searchsorted(x, 33)
+print(y)  # 7
+
+y = np.searchsorted(x, 33, side='right')
+print(y)  # 8
+```
+
+### 计数
+
+`numpy.count_nonzero(a, axis=None)` Counts the number of non-zero values in the array a.
+
+## 集合操作
+
+### 构造集合
+
+`numpy.unique(ar, return_index=False, return_inverse=False, return_counts=False, axis=None)` Find the unique elements of an array.
+
+- `return_index=True` 表示返回新列表元素在旧列表中的位置。
+- `return_inverse=True`表示返回旧列表元素在新列表中的位置。
+- `return_counts=True`表示返回新列表元素在旧列表中出现的次数。
+
+```python
+import numpy as np
+
+x = np.unique([1, 1, 3, 2, 3, 3])
+print(x)  # [1 2 3]
+
+x = sorted(set([1, 1, 3, 2, 3, 3]))
+print(x)  # [1, 2, 3]
+
+x = np.array([[1, 1], [2, 3]])
+u = np.unique(x)
+print(u)  # [1 2 3]
+
+x = np.array([[1, 0, 0], [1, 0, 0], [2, 3, 4]])
+y = np.unique(x, axis=0)
+print(y)
+# [[1 0 0]
+#  [2 3 4]]
+
+x = np.array(['a', 'b', 'b', 'c', 'a'])
+u, index = np.unique(x, return_index=True)
+print(u)  # ['a' 'b' 'c']
+print(index)  # [0 1 3]
+print(x[index])  # ['a' 'b' 'c']
+
+x = np.array([1, 2, 6, 4, 2, 3, 2])
+u, index = np.unique(x, return_inverse=True)
+print(u)  # [1 2 3 4 6]
+print(index)  # [0 1 4 3 1 2 1]
+print(u[index])  # [1 2 6 4 2 3 2]
+
+u, count = np.unique(x, return_counts=True)
+print(u)  # [1 2 3 4 6]
+print(count)  # [1 3 1 1 1]
+```
+
+### 布尔运算
+
+- `numpy.in1d(ar1, ar2, assume_unique=False, invert=False)` Test whether each element of a 1-D array is also present in a second array.
+
+Returns a boolean array the same length as `ar1` that is True where an element of `ar1` is in `ar2` and False otherwise.
+
+```python
+import numpy as np
+
+test = np.array([0, 1, 2, 5, 0])
+states = [0, 2]
+mask = np.in1d(test, states)
+print(mask)  # [ True False  True False  True]
+print(test[mask])  # [0 2 0]
+
+mask = np.in1d(test, states, invert=True)
+print(mask)  # [False  True False  True False]
+print(test[mask])  # [1 5]
+```
+
+交集
+
+`numpy.intersect1d(ar1, ar2, assume_unique=False, return_indices=False)` Find the intersection of two arrays.
+
+并集
+
+`numpy.union1d(ar1, ar2)` Find the union of two arrays.
+
+Return the unique, sorted array of values that are in either of the two input arrays.
+
+差集
+
+`numpy.setdiff1d(ar1, ar2, assume_unique=False)` Find the set difference of two arrays.
+
+Return the unique values in `ar1` that are not in `ar2`.
+
+异或
+
+`setxor1d(ar1, ar2, assume_unique=False)` Find the set exclusive-or of two arrays.
+
