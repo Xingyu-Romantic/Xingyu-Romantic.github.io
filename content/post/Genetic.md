@@ -8,7 +8,7 @@ description: ""
 
 通过编码、设置种群、设置适应度函数、遗传操作、解码产生需要的解。f(x)=x*sin(x)+1，x[0,2],求f(x)的最大值、最小值。
 
-![](static/Gen.png)
+![](https://xingyublog.netlify.app/static/Gen.png)
 
 
 
@@ -39,7 +39,7 @@ plt.show()
 ```
 
 
-![png](static/output_7_0.png)
+![png](https://xingyublog.netlify.app/static/output_7_0.png)
 
 
 ## 随机产生种群
@@ -232,7 +232,7 @@ plot(results,iteration)
 ```
 
 
-![png](static/output_25_0.png)
+![png](https://xingyublog.netlify.app/static/output_25_0.png)
 
 
 
