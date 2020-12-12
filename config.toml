@@ -72,9 +72,9 @@ dateFormatToUse = "2006-01-02"
 # Menu Info
 [menu]
   [[menu.main]]
-    identifier = "post"
-    name = "Post"
-    url = "post"
+    identifier = "posts"
+    name = "Posts"
+    url = "posts"
     weight = 1
 
   [[menu.main]]
@@ -119,7 +119,7 @@ dateFormatToUse = "2006-01-02"
   ## URL of avatar shown in home page
   avatar = "images/avatar.png"
   ## subtitle shown in home page
-  subtitle = "A Clean, Elegant but Advanced Hugo Theme"
+  subtitle = "要么出众，要么出局！"
 
   # whether to show social share links in post page
   socialShare = true
