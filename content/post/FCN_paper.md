@@ -2,6 +2,8 @@
 title: "FCN_paper"
 date: 2020-10-11T13:09:23+08:00
 description: "FCN 论文阅读"
+tags: ["paper"]
+categories: ["papere"]
 ---
 
 

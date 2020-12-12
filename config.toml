@@ -30,27 +30,27 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 
 [[menu.main]]             # config your menu              # 配置目录
   name = "主页"
-  weight = 10
+  weight = 1
   identifier = "home"
   url = "/"
 [[menu.main]]
   name = "文章"
-  weight = 20
+  weight = 2
   identifier = "archives"
   url = "/post/"
 [[menu.main]]
   name = "关于我"
-  weight = 50
+  weight = 5
   identifier = "about"
   url = "/about/"
 [[menu.main]]
   name = "Tags"
-  weight = 30
+  weight = 3
   identifier = "tags"
   url = "/tags/"
 [[menu.main]]
   name = "归档"
-  weight = 40
+  weight = 4
   identifier = "categories"
   url = "/categories/"
 
