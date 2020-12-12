@@ -1,8 +1,8 @@
 ---
 title: "JUSTCTF 新生杯Write Up"
 date: 2020-12-10T09:48:08+08:00
-tags:["CTF"]
-categories:["CTF"]
+tags: ["CTF"]
+categories: ["CTF"]
 ---
 
 
