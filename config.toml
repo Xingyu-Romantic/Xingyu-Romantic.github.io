@@ -1,6 +1,6 @@
 baseURL = "/"
 # website language
-languageCode = "en"
+languageCode = "zh"
 # [en, zh, ...] determines which i18n file to use
 defaultContentLanguage = "en"
 # website title
@@ -189,7 +189,7 @@ dateFormatToUse = "2020-01-01"
 
   # Social Info in home page
   [params.social]
-    GitHub = "https://github.com/Xingyu-Romantic"
+    GitHub = "Xingyu-Romantic"
     #Linkedin = "xxxx"
     #Twitter = "xxxx"
     #Instagram = "xxxx"
@@ -233,7 +233,7 @@ dateFormatToUse = "2020-01-01"
     #Strava = "xxxx"
     #Skype = "xxxx"
     #Whatsapp = "xxxx"
-    Zhihu = "https://www.zhihu.com/people/xing-yu-56-35-39"
+    Zhihu = "xing-yu-56-35-39"
     #Douban = "xxxx"
     #Angellist = "xxxx"
     #Slidershare = "xxxx"
