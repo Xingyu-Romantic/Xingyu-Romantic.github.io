@@ -185,7 +185,7 @@ dateFormatToUse = "2020-01-01"
 
   # Gravatar Info for preferred avatar in home page
   [params.gravatar]
-    email = "a940858626@qq.com"
+    #email = "a940858626@qq.com"
 
   # Social Info in home page
   [params.social]
