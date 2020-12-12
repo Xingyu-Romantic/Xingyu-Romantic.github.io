@@ -1,6 +1,6 @@
 baseURL = "/"
 # website language
-languageCode = "zh"
+languageCode = "en"
 # [en, zh, ...] determines which i18n file to use
 defaultContentLanguage = "en"
 # website title
@@ -100,7 +100,7 @@ dateFormatToUse = "2020-01-01"
     pre = '<i class="fas fa-language fa-fw"></i>'
     name = ""
     title = "简体中文"
-    url = "https://hugo-loveit-zh.netlify.com"
+    url = "http://www.involute.top/"
     weight = 5
 
 [params]
