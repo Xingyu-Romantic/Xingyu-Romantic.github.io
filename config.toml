@@ -95,13 +95,13 @@ dateFormatToUse = "2020-01-01"
     url = "about"
     weight = 4
 
-  [[menu.main]]
-    identifier = "zh"
-    pre = '<i class="fas fa-language fa-fw"></i>'
-    name = ""
-    title = "简体中文"
-    url = "http://www.involute.top/"
-    weight = 5
+  #[[menu.main]]
+   # identifier = "zh"
+   # pre = '<i class="fas fa-language fa-fw"></i>'
+    #name = ""
+    #title = "简体中文"
+    #url = "http://www.involute.top/"
+    #weight = 5
 
 [params]
   # LoveIt theme version
@@ -130,7 +130,7 @@ dateFormatToUse = "2020-01-01"
   ## ICP info only in China (HTML format is allowed)
   icp = ""
   ## license info (HTML format is allowed)
-  license= '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+  license= '<a rel="license external nofollow noopener noreffer" href="http://www.involute.top/" target="_blank">CC BY-NC 4.0</a>'
 
   # public git repo url to link lastmod git commit only then enableGitInfo is true
   gitRepo = ""
