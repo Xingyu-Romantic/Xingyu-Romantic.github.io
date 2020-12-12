@@ -40,7 +40,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   url = "/post/"
 [[menu.main]]
   name = "关于我"
-  weight = 40
+  weight = 50
   identifier = "about"
   url = "/about/"
 [[menu.main]]
@@ -48,11 +48,11 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   weight = 30
   identifier = "tags"
   url = "/tags/"
-#[[menu.main]]
-#  name = "文件夹"
-#  weight = 40
-#  identifier = "categories"
-#  url = "/categories/"
+[[menu.main]]
+  name = "归档"
+  weight = 40
+  identifier = "categories"
+  url = "/categories/"
 
 [params]
   version = "4.x"           # Used to give a friendly message when you have an incompatible update
@@ -72,7 +72,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   archivePaginate = 50
 
   # show 'xx Posts In Total' in archive page ?            # 是否在归档页显示文章的总数
-  showArchiveCount = false
+  showArchiveCount = true
 
   # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
   dateFormatToUse = "2006-01-02"
