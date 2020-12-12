@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Hands on Data Analysis | Xingyu &#39;s Note</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="About LoveIt Theme"><link rel="prev" href="/post/tensorflow2.0_ch1/" /><link rel="next" href="/post/fcn_paper/" /><link rel="canonical" href="/post/hands-on-data-analysis/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Hands on Data Analysis" />
+<meta property="og:description" content="动手数据分析笔记 第一章 第一节 数据载入及初步观察 数据载入 1 2 3  df = pd.read_csv(&#39;file_path&#39;) df2 = pd.read_table(&#39;file_path&#39;)   read_csv 函数  见CSDN 博客： https://blog.csdn.net/weixin_39175124/article/details/79434022
+ 问：read_csv 和 read_table 区别？    函数 说明     read_csv 从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为逗号   read_table 从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为制表符（&#39;\t&rsquo;）   read_fwf 读取定宽列格式数据（也就说，没有分隔符）   read_clipboard 读取剪贴板中的数据，可以看作read_table的剪贴板，在将网页转换为表格时很有用。    问：什么是逐块读取?为什么要逐块读取呢? 1  chunker = pd.read_csv(&#39;train.csv&#39;, chunksize=1000)   有chunksize参数可以进行逐块加载。经测试，它的本质就是将文本分成若干块，每次处理chunksize行的数据，最终返回一个TextParser对象
+1 2 3 4 5 6  chunker = pd." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/hands-on-data-analysis/" />
+<meta property="article:published_time" content="2020-08-27T22:37:25+08:00" />
+<meta property="article:modified_time" content="2020-08-27T22:37:25+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hands on Data Analysis"/>
+<meta name="twitter:description" content="动手数据分析笔记 第一章 第一节 数据载入及初步观察 数据载入 1 2 3  df = pd.read_csv(&#39;file_path&#39;) df2 = pd.read_table(&#39;file_path&#39;)   read_csv 函数  见CSDN 博客： https://blog.csdn.net/weixin_39175124/article/details/79434022
+ 问：read_csv 和 read_table 区别？    函数 说明     read_csv 从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为逗号   read_table 从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为制表符（&#39;\t&rsquo;）   read_fwf 读取定宽列格式数据（也就说，没有分隔符）   read_clipboard 读取剪贴板中的数据，可以看作read_table的剪贴板，在将网页转换为表格时很有用。    问：什么是逐块读取?为什么要逐块读取呢? 1  chunker = pd.read_csv(&#39;train.csv&#39;, chunksize=1000)   有chunksize参数可以进行逐块加载。经测试，它的本质就是将文本分成若干块，每次处理chunksize行的数据，最终返回一个TextParser对象
+1 2 3 4 5 6  chunker = pd."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hands on Data Analysis",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/post\/hands-on-data-analysis\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "post","wordcount":  2034 ,
+        "url": "\/post\/hands-on-data-analysis\/","datePublished": "2020-08-27T22:37:25\u002b08:00","dateModified": "2020-08-27T22:37:25\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="/">Xingyu &#39;s Note</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="/">Xingyu &#39;s Note</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">Hands on Data Analysis</h1><div class="post-content"><h1 id="动手数据分析笔记">动手数据分析笔记</h1>
+<a class="post-dummy-target" id="第一章"></a><h2>第一章</h2>
+<a class="post-dummy-target" id="第一节-数据载入及初步观察"></a><h3>第一节 数据载入及初步观察</h3>
+<a class="post-dummy-target" id="数据载入"></a><h4>数据载入</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">df = pd.read_csv(&#39;file_path&#39;)
+
+df2 = pd.read_table(&#39;file_path&#39;)
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="read_csv-函数"></a><h6>read_csv 函数</h6>
+<blockquote>
+<p>见CSDN 博客： <a href="https://blog.csdn.net/weixin_39175124/article/details/79434022">https://blog.csdn.net/weixin_39175124/article/details/79434022</a></p>
+</blockquote>
+<a class="post-dummy-target" id="问read_csv-和-read_table-区别"></a><h6>问：read_csv 和 read_table 区别？</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read_csv</code></td>
+<td>从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为逗号</td>
+</tr>
+<tr>
+<td><code>read_table</code></td>
+<td>从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为制表符（'\t&rsquo;）</td>
+</tr>
+<tr>
+<td><code>read_fwf</code></td>
+<td>读取定宽列格式数据（也就说，没有分隔符）</td>
+</tr>
+<tr>
+<td><code>read_clipboard</code></td>
+<td>读取剪贴板中的数据，可以看作read_table的剪贴板，在将网页转换为表格时很有用。</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="问什么是逐块读取为什么要逐块读取呢"></a><h6>问：什么是逐块读取?为什么要逐块读取呢?</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">chunker</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>有<em>chunksize</em>参数可以进行逐块加载。经测试，它的本质就是将文本分成若干块，每次处理<em>chunksize</em>行的数据，最终返回一个<strong>TextParser</strong>对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">chunker</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;data.csv&#34;</span><span class="p">,</span><span class="n">chunksize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">chunker</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">piece</span><span class="p">))</span>
+        <span class="c1">#&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">piece</span><span class="p">))</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="查看数据基本信息"></a><h4>查看数据基本信息</h4>
+<a class="post-dummy-target" id="相关函数"></a><h6>相关函数</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df.info()</code></td>
+<td>df.info()：查看索引、数据类型和内存信息</td>
+</tr>
+<tr>
+<td><code>df.head(m)</code></td>
+<td>查看表格前m行数据</td>
+</tr>
+<tr>
+<td><code>df.tail(n)</code></td>
+<td>查看表格后n行数据</td>
+</tr>
+<tr>
+<td><code>df.isnull().head()</code></td>
+<td>判断数据是否为空，有空的地方返回True, 其余地方返回False</td>
+</tr>
+<tr>
+<td><code>df.shape()</code></td>
+<td>查看数据列数和行数</td>
+</tr>
+<tr>
+<td><code>df.describe()</code></td>
+<td>查看数值型列的汇总统计</td>
+</tr>
+<tr>
+<td><code>df[&quot;列名&quot;].unique()</code></td>
+<td>得到Series中的唯一值数组</td>
+</tr>
+<tr>
+<td><code>df[&quot;列名&quot;].value_counts()</code></td>
+<td>计算各值出现的次数</td>
+</tr>
+<tr>
+<td><code>df.apply(pd.value_counts)</code></td>
+<td>唯一值，及其计数</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="预修改数据"></a><h4>预修改数据</h4>
+<a class="post-dummy-target" id="函数"></a><h6>函数</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df = pd.read_csv('url', names=[''], ``index_col='', header=0)</code></td>
+<td>通过names，修改表头，index_col为行标签，header=0 ,以第0行为表头</td>
+</tr>
+<tr>
+<td><code>df.insert(i,'c','data')</code></td>
+<td>在第i个位置，c为列名，data为数据</td>
+</tr>
+<tr>
+<td><code>df['C'] = data</code></td>
+<td>在最后一列， C为列名，data为数据</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="保存数据"></a><h4>保存数据</h4>
+<a class="post-dummy-target" id="函数-1"></a><h6>函数</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df.to_csv('train_chinese.csv')</code></td>
+<td>在工作目录下新建一个&rsquo;train_chinese.csv&rsquo;文件  （修改后的）</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="第二节-pandas基础"></a><h3>第二节 Pandas基础</h3>
+<a class="post-dummy-target" id="pandas-中的两种数据类型"></a><h4>Pandas 中的两种数据类型</h4>
+<a class="post-dummy-target" id="dateframe"></a><h6>DateFrame</h6>
+<blockquote>
+<p>二维的表格型数据结构，可以将DataFrame理解为Series的容器。</p>
+</blockquote>
+<p><strong>例：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Years&#39;</span><span class="p">:[</span><span class="mi">2001</span><span class="p">,</span><span class="mi">2002</span><span class="p">,</span><span class="mi">2003</span><span class="p">,</span><span class="mi">2004</span><span class="p">,</span><span class="mi">2005</span><span class="p">],</span><span class="s1">&#39;boold&#39;</span><span class="p">:[</span><span class="n">true</span><span class="p">,</span><span class="n">false</span><span class="p">,</span><span class="n">true</span><span class="p">,</span><span class="n">true</span><span class="p">,</span><span class="n">false</span><span class="p">],</span><span class="s1">&#39;strd&#39;</span><span class="p">:</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">,</span><span class="s1">&#39;4&#39;</span><span class="p">,</span><span class="s1">&#39;5&#39;</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="series"></a><h6>Series</h6>
+<blockquote>
+<p>一维数组，与Numpy中的一维array类似。二者与Python基本的数据结构List也很相近。Series如今能保存不同种数据类型，字符串、boolean值、数字等都能保存在Series中。</p>
+</blockquote>
+<p><strong>例：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sdata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;boold&#39;</span><span class="p">:</span><span class="n">true</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">:</span><span class="mi">2002</span><span class="p">,</span><span class="s1">&#39;strd&#39;</span><span class="p">:</span><span class="s1">&#39;Series&#39;</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="操作数据"></a><h4>操作数据</h4>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查看每一列的项（查看表头）</td>
+<td><code>df.columns</code></td>
+</tr>
+<tr>
+<td>查看某一列</td>
+<td><code>df['列名'].head()  </code>   /     <code>df.列名.head()</code></td>
+</tr>
+<tr>
+<td>删除某行</td>
+<td><code>df.drop(['行名','行名'])</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>df.drop(df.index[0], inplace=True) </code>     #删除第一行</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df.drop(df.index[0:3], inplace=True) </code> #删除前三行</td>
+</tr>
+<tr>
+<td>删除某列</td>
+<td><code>del df[A] </code>        #就地修改</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df = df.drop(['B', 'C'], axis=1)</code>  #不会就地修改，创建副本返回</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df.drop(['B', 'C'], axis=1, inplace=True)</code>#就地修改</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df.drop(df.columns[0], axis=1, inplace=True)  </code>     # 删除第1列</td>
+</tr>
+<tr>
+<td>隐藏某列</td>
+<td><code>df.drop(['PassengerId','Name','Age','Ticket'],axis=1).head()</code></td>
+</tr>
+<tr>
+<td>筛选操作（通过名称筛选）</td>
+<td><code>df.loc[&quot;行1&quot;,&quot;行2&quot;]</code>   <code>df.loc[:,&quot;列1&quot;:&quot;列2&quot;]</code>    <code>df.loc[:,[&quot;列名&quot;]]</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>df[df.年龄 &gt; 20].head() </code>    #筛选楚年龄大于20的并展示</td>
+</tr>
+<tr>
+<td>筛选操作 （通过序号）</td>
+<td><code>df.iloc[[100,105,108],2:5] </code>  #筛选行编号，列编号</td>
+</tr>
+<tr>
+<td>布尔筛选</td>
+<td><code> &amp; --&gt; and</code> <code>| --&gt; or</code> <code>~ --&gt; not </code>  #逻辑符号对应</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df [ (条件1)  逻辑符号 （条件二） 逻辑符号 （条件三）]</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>df[df.年龄&gt;20,[&quot;年龄&quot;]]</code> #筛选出年龄大于二十，只显示年龄字段</td>
+</tr>
+<tr>
+<td>重置索引</td>
+<td><code>reset_index(drop=True)</code>   #drop=True 不保留原来index</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="reindex-参数说明"></a><h6>reindex 参数说明</h6>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/18/VoMRsav6qWArX9h.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="第三节-探索性数据分析"></a><h3>第三节 探索性数据分析</h3>
+<a class="post-dummy-target" id="了解数据"></a><h4>了解数据</h4>
+<a class="post-dummy-target" id="数据排序"></a><h6>数据排序</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df.sort_index(axis=0)</code></td>
+<td>对行索引升序排列</td>
+</tr>
+<tr>
+<td><code>df.sort_index(axis=1, ascending=False)</code></td>
+<td>对列索引降序排列</td>
+</tr>
+<tr>
+<td><code>df['列名'].sort_values()</code></td>
+<td>按值对Series进行排序</td>
+</tr>
+<tr>
+<td><code>df.sort_values(by=['列名1','列名2'])</code></td>
+<td>根据某列的值进行排序</td>
+</tr>
+<tr>
+<td><code>df['列名'].rank(methods='' , ascending=True)</code></td>
+<td>Series对原数据进行平均排名</td>
+</tr>
+<tr>
+<td><code>df.rank(axis='columns')</code></td>
+<td>在列上进行平均排名</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="rank函数methods参数"></a><h6>rank函数methods参数</h6>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/18/9uNFM4WBxPnIDSG.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="对于泰坦尼克号数据数据与存活率的思考"></a><h6>对于泰坦尼克号数据，数据与存活率的思考</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#对家庭成员进行分析</span>
+<span class="n">family</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;堂兄第/妹个数&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;父母与小孩个数&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;家庭人数&#39;</span><span class="p">,</span> <span class="n">family</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;家庭人数&#34;</span><span class="p">],</span><span class="n">ascending</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plttest</span><span class="p">[</span><span class="s2">&#34;家庭人数&#34;</span><span class="p">],</span><span class="n">plttest</span><span class="p">[</span><span class="s2">&#34;是否幸存&#34;</span><span class="p">],</span><span class="s1">&#39;ko--&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="/home/xingyu/.config/Typora/typora-user-images/image-20200817225613356.png" alt="image-20200817225613356" class="lazyload"><figcaption class="image-caption">image-20200817225613356</figcaption></figure></p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/18/YWXvxJE4Q9gz8q2.png" alt="" class="lazyload"></figure></p>
+<blockquote>
+<ol>
+<li>票价越高且年龄较小的，基本全部存活</li>
+<li>家庭人数越多,存活率几乎为0</li>
+</ol>
+</blockquote>
+<a class="post-dummy-target" id="第二章"></a><h2>第二章</h2>
+<a class="post-dummy-target" id="第一节-数据清洗及特征处理"></a><h3>第一节 数据清洗及特征处理</h3>
+<a class="post-dummy-target" id="数据处理"></a><h4>数据处理</h4>
+<a class="post-dummy-target" id="缺失值处理"></a><h5>缺失值处理</h5>
+<a class="post-dummy-target" id="缺失值观察"></a><h6>缺失值观察</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>df.isnull()</td>
+<td><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/20/1jOFKfeu3r7Xg4w.png" alt="" class="lazyload"></figure></td>
+</tr>
+<tr>
+<td>df.isnull().sum()</td>
+<td><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/20/MyChYLmnGec8Ro1.png" alt="" class="lazyload"></figure></td>
+</tr>
+<tr>
+<td>df.info()</td>
+<td><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/20/1RWodQNxCpaElmt.png" alt="" class="lazyload"></figure></td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="处理缺失值"></a><h5>处理缺失值</h5>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df.dropna()</code></td>
+<td>根据各标签的值中是否存在缺失数据对轴标签进行过滤,可通过阈值调节对确实值的容忍度</td>
+</tr>
+<tr>
+<td><code>df.fillna()</code></td>
+<td>用指定值或插值方法(ffill or bfill) 填充缺失数据</td>
+</tr>
+<tr>
+<td><code>df.isnull()</code></td>
+<td>返回一个含有布尔值的对象,这些布尔值表示哪些值是缺失值/NA, 该对象的类型与源类型一样</td>
+</tr>
+<tr>
+<td><code>notnull</code></td>
+<td>isnull的否定式</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="dropna"></a><h6>dropna()</h6>
+<blockquote>
+<p>参数：</p>
+<p><code>axis</code>:    default 0指行,1为列</p>
+<p><code>how</code>:    {‘any’, ‘all’}, default ‘any’指带缺失值的所有行;&lsquo;all’指清除全是缺失值的</p>
+<p><code>thresh</code>:  int,保留含有int个非空值的行</p>
+<p><code>subset</code>:  对特定的列进行缺失值删除处理</p>
+<p><code>inplace</code>: 这个很常见,True表示直接在原数据上更改</p>
+</blockquote>
+<a class="post-dummy-target" id="fillna"></a><h6>fillna()</h6>
+<blockquote>
+<p>参数 :</p>
+<p><code>inplace</code>: True of False</p>
+<p><code>method</code> ： {‘pad’, ‘ffill’,‘backfill’, ‘bfill’, None}, default None</p>
+<p>​					<code>pad/ffill</code>：用前一个非缺失值去填充该缺失值</p>
+<p>​					<code>backfill/bfill</code>：用下一个非缺失值填充该缺失值</p>
+<p>​					<code>None</code>：指定一个值去替换缺失值（缺省默认这种方式）</p>
+<p><code>limit</code>：限制填充个数</p>
+<p><code>axis</code>：修改填充方向</p>
+</blockquote>
+<a class="post-dummy-target" id="问检索空缺值用npnan要比用none好这是为什么"></a><h6>问：检索空缺值用np.nan要比用None好，这是为什么？</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>  <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+<span class="nb">type</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>    <span class="c1">#&lt;class &#39;NoneType&#39;&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>数值列读取数据后，空缺值的数据类型为<code>float64</code>所以用<strong>None</strong>一般索引不到，比较的时候最好用<strong>np.nan</strong></p>
+<a class="post-dummy-target" id="对年龄age缺失值处理"></a><h6>对年龄(Age)缺失值处理</h6>
+<p><strong>对年龄采用均值处理:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">df[&#39;Age&#39;].fillna(df[&#39;Age&#39;].describe()[&#39;mean&#39;], inplace = True)
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="对舱位cabin处理"></a><h6>对舱位(Cabin)处理</h6>
+<p><strong>查看舱位基本信息</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">k_Cabin</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">y</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">Cabin_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">Cabin</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">df</span><span class="o">.</span><span class="n">Survived</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">all_people</span> <span class="o">=</span> <span class="n">k_Cabin</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">][</span><span class="n">k_Cabin</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">arrived_people</span> <span class="o">=</span> <span class="n">k_Cabin</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">][(</span><span class="n">k_Cabin</span><span class="o">.</span><span class="n">Cabin</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">k_Cabin</span><span class="o">.</span><span class="n">Survived</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arrived_people</span> <span class="o">/</span> <span class="n">all_people</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;No Cabin&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Cabin_k</span> <span class="o">!=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">Cabin_k</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Survived rate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/20/sHIOaroTBN1EZpx.png" alt="" class="lazyload"></figure></p>
+<p>综上，客舱缺失值是无舱位，属正常现象。</p>
+<p>客舱除T客舱外，其余存活率均维持在0.6上下，但T客舱只有一人，所以客舱无需考虑。</p>
+<p>无客舱人数出</p>
+<a class="post-dummy-target" id="计算无客舱人数存活率踩坑"></a><h6>计算无客舱人数存活率踩坑</h6>
+<p><strong>初步思路</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#初步思路</span>
+<span class="n">df</span><span class="o">.</span><span class="n">Cabin</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Cabin</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">df</span><span class="o">.</span><span class="n">Survived</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="c1">##得出结果 0     发现数据为NaN时，count()得出结果始终为0</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>在 <code>@型 from KDD🍻</code>的帮助下，</strong></p>
+<p><code>[df.Cabin.isnull() &amp; df.Survived == 1] </code>，结果为长度为1的<code>list</code>
+想到拆分<code>list</code>， 采用<code>np.split()</code>， 将<code>list</code>转为<code>np.array</code>，发现转为<code>np.array</code>时，直接可拆分数组。</p>
+<p><strong>最终结果</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Cabin_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">Cabin</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">df</span><span class="o">.</span><span class="n">Survived</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Cabin_k</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="重复值处理"></a><h5>重复值处理</h5>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df['列名'].value_counts()</code></td>
+<td>查看某列的重复值，显示 <strong>值</strong>和<strong>数量</strong></td>
+</tr>
+<tr>
+<td><code>df['列名'].unique()</code></td>
+<td>只显示<strong>值</strong></td>
+</tr>
+<tr>
+<td><code>df.duplicated()</code></td>
+<td>指定列数据重复项判断     返回：指定列重复行boolean Series</td>
+</tr>
+<tr>
+<td><code>df.drop_duplicates()</code></td>
+<td>删除重复数据      返回：副本或替代</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参数：
+subset=None：列标签或标签序列，可选# 只考虑某些列来识别重复项;默认使用所有列
+keep='first&rsquo;：{&lsquo;first&rsquo;，&lsquo;last&rsquo;，False}</p>
+<ul>
+<li>
+<p>first：将第一次出现重复值标记为True</p>
+</li>
+<li>
+<p>last：将最后一次出现重复值标记为True</p>
+</li>
+<li>
+<p>False：将所有重复项标记为True</p>
+</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="特征处理"></a><h4>特征处理</h4>
+<a class="post-dummy-target" id="数值类型变量处理"></a><h5>数值类型变量处理</h5>
+<a class="post-dummy-target" id="分箱操作离散化处理"></a><h6>分箱操作（离散化处理）</h6>
+<p>个人理解，将数据划分不同区间，降低过拟合风险。</p>
+<p>如：年龄，划分为不同区间，分别处理</p>
+<a class="post-dummy-target" id="分箱操作离散化处理-函数-pdcut"></a><h6>分箱操作（离散化处理） 函数 pd.cut()</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">retbins</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include_lowest</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">duplicates</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;AgeBand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">,</span><span class="s1">&#39;4&#39;</span><span class="p">,</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;AgeBand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">80</span><span class="p">],</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">,</span><span class="s1">&#39;4&#39;</span><span class="p">,</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;AgeBand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.9</span><span class="p">],</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">,</span><span class="s1">&#39;4&#39;</span><span class="p">,</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>x</code> ： 一维数组（对应前边例子中提到的销售业绩）</p>
+<p><code>bins</code> ：整数，标量序列或者间隔索引，是进行分组的依据，</p>
+<ul>
+<li>如果填入整数n，则表示将x中的数值分成等宽的n份（即每一组内的最大值与最小值之差约相等）；</li>
+<li>如果是标量序列，序列中的数值表示用来分档的分界值</li>
+<li>如果是间隔索引，“ bins”的间隔索引必须不重叠</li>
+</ul>
+<p><code>right</code> ：布尔值，默认为True表示包含最右侧的数值</p>
+<ul>
+<li>当“ right = True”（默认值）时，则“ bins”=[1、2、3、4]表示（1,2]，（2,3],（3,4]</li>
+<li>当<code>bins</code>是一个间隔索引时，该参数被忽略。</li>
+</ul>
+<p><code>labels</code> : 数组或布尔值，可选.指定分箱的标签</p>
+<ul>
+<li>如果是数组，长度要与分箱个数一致，比如“ bins”=[1、2、3、4]表示（1,2]，（2,3],（3,4]一共3个区间，则labels的长度也就是标签的个数也要是3</li>
+<li>如果为False，则仅返回分箱的整数指示符，即x中的数据在第几个箱子里</li>
+<li>当bins是间隔索引时，将忽略此参数</li>
+</ul>
+<p><code>retbins</code>： 是否显示分箱的分界值。默认为False，当bins取整数时可以设置retbins=True以显示分界值，得到划分后的区间</p>
+<p><code>precision</code>：整数，默认3，存储和显示分箱标签的精度。</p>
+<p><code>include_lowest</code>：布尔值，表示区间的左边是开还是闭，默认为false，也就是不包含区间左边。</p>
+<p><code>duplicates</code>：如果分箱临界值不唯一，则引发ValueError或丢弃非唯一</p>
+</blockquote>
+<a class="post-dummy-target" id="文本类型变量处理"></a><h5>文本类型变量处理</h5>
+<a class="post-dummy-target" id="文本变量用数值表示"></a><h6>文本变量用数值表示</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df.replace()</code></td>
+<td>参数替换</td>
+</tr>
+<tr>
+<td><code>df.map(#dict)</code></td>
+<td>map传入字典替换</td>
+</tr>
+<tr>
+<td><code>LabelEncoder</code></td>
+<td><a href="http://www.scikitlearn.com.cn/0.21.3/46/#592">http://www.scikitlearn.com.cn/0.21.3/46/#592</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">to_replace</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pad&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="c1">#LabelEncoder 例子</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">,</span> <span class="s1">&#39;Ticket&#39;</span><span class="p">]:</span>
+    <span class="n">lbl</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>  
+    <span class="n">label_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="nb">range</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())))</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">feat</span> <span class="o">+</span> <span class="s2">&#34;_labelEncode&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">label_dict</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">feat</span> <span class="o">+</span> <span class="s2">&#34;_labelEncode&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lbl</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="文字-变量one-hot编码"></a><h6>文字 变量one-hot编码</h6>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pd.get_dummies()</td>
+<td>将数据转化为one-hot DataFrame</td>
+</tr>
+<tr>
+<td>pd.concat()</td>
+<td>沿着指定轴，将DataFrame 拼接在一起</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pandas</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">prefix_sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">dummy_na</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Parameters</p>
+<ul>
+<li><strong>data</strong>array-like, Series, or DataFrame</li>
+</ul>
+<p>Data of which to get dummy indicators.</p>
+<ul>
+<li><strong>prefix</strong>str, list of str, or dict of str, default None</li>
+</ul>
+<p>String to append DataFrame column names. Pass a list with length equal to the number of columns when calling get_dummies on a DataFrame. Alternatively, prefix can be a dictionary mapping column names to prefixes.</p>
+<ul>
+<li><strong>prefix_sep</strong>str, default ‘_’</li>
+</ul>
+<p>If appending prefix, separator/delimiter to use. Or pass a list or dictionary as with prefix.</p>
+<ul>
+<li><strong>dummy_na</strong>bool, default False</li>
+</ul>
+<p>Add a column to indicate NaNs, if False NaNs are ignored.</p>
+<ul>
+<li><strong>columns</strong>list-like, default None</li>
+</ul>
+<p>Column names in the DataFrame to be encoded. If columns is None then all the columns with object or category dtype will be converted.</p>
+<ul>
+<li><strong>sparse</strong>bool, default False</li>
+</ul>
+<p>Whether the dummy-encoded columns should be backed by a <code>SparseArray</code> (True) or a regular NumPy array (False).</p>
+<ul>
+<li><strong>drop_first</strong>bool, default False</li>
+</ul>
+<p>Whether to get k-1 dummies out of k categorical levels by removing the first level.</p>
+<ul>
+<li><strong>dtype</strong>dtype, default np.uint8</li>
+</ul>
+<p>Data type for new columns. Only a single dtype is allowed.<em>New in version 0.23.0.</em></p>
+<p>Returns</p>
+<ul>
+<li>DataFrame</li>
+</ul>
+<p>Dummy-coded data.</p>
+<p>来源：官方文档</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">join_axes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verify_integrity</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>objs</code> 需要连接的对象，eg [df1, df2]
+<code>axis</code> axis = 0, 表示在水平方向(row)进行连接 axis = 1, 表示在垂直方向(column)进行连接
+<code>join outer</code>, 表示index全部需要; inner,表示只取index重合的部分
+<code>join_axes</code> 传入需要保留的index
+<code>ignore_index </code>忽略需要连接的frame本身的index。当原本的index没有特别意义的时候可以使用
+<code>keys</code> 可以给每个需要连接的df一个label</p>
+<p>来源：https://www.jianshu.com/p/421f040dfe2f</p>
+</blockquote>
+<a class="post-dummy-target" id="从name中提取title"></a><h5>从Name中提取title</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参数:
+pat : 字符串或正则表达式
+flags : 整型,
+expand : 布尔型,是否返回DataFrame
+Returns:
+数据框dataframe/索引index</p>
+</blockquote>
+<a class="post-dummy-target" id="第二节-数据重构"></a><h3>第二节 数据重构</h3>
+<a class="post-dummy-target" id="数据理解"></a><h4>数据理解</h4>
+<a class="post-dummy-target" id="数据合并"></a><h5>数据合并</h5>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.concat</code></td>
+<td>横向纵向均可</td>
+</tr>
+<tr>
+<td><code>df.append</code></td>
+<td>纵向连接</td>
+</tr>
+<tr>
+<td><code>df.join</code></td>
+<td>横向连接，根据相同的index进行连接</td>
+</tr>
+<tr>
+<td><code>pd.merge</code></td>
+<td>横向连接    用于通过一个或多个键将两个数据集的行连接起来，结果集的行数并没有增加，列数则为两个元数据的列数和减去连接键的数量</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>pd.concat(<em>objs</em>, <em>axis=0</em>,<em>join='outer&rsquo;</em>,<em>join_axes=None</em>, <em>ignore_index=False</em>,<em>keys=None</em>, <em>levels=None</em>,</p>
+<p>​    	           <em>names=None</em>, <em>verify_integrity=False</em>)</p>
+<p><code>objs</code> 需要连接的对象，eg [df1, df2]
+<code>axis</code>               axis = 0, 表示在水平方向(row)进行连接</p>
+<p>​                         axis = 1, 表示在垂直方向(column)进行连接
+<code>join outer</code>, 表示index全部需要; inner,表示只取index重合的部分
+<code>join_axes</code> 传入需要保留的index
+<code>ignore_index</code> 忽略需要连接的frame本身的index。当原本的index没有特别意义的时候可以使用
+<code>keys </code>可以给每个需要连接的df一个label</p>
+</blockquote>
+<blockquote>
+<p>DataFrame.append(<em>other</em>, <em>ignore_index=False</em>, <em>verify_integrity=False</em>, <em>sort=None</em>)</p>
+<p><code>other</code>: 是要添加的数据，append很不挑食，这个other可以是dataframe，dict，Seris，list等等。</p>
+<p><code>ignore_index</code>: 参数为True时将在数据合并后，按照0，1，2，3&hellip;.的顺序重新设置索引，忽略了旧索引。</p>
+<p><code>verify_integrity</code>：参数为True时，如果合并的数据与原数据包含索引相同的行，将报错。</p>
+</blockquote>
+<blockquote>
+<p>DataFrame.join(<em>other</em>, <em>on=None</em>, <em>how='left&rsquo;</em>,<em>lsuffix=&rsquo;'</em>, <em>rsuffix=&rsquo;'</em>, <em>sort=False</em>)</p>
+<p><code>other</code>：另一个待拼接的DataFrame或者有名称列表的Series</p>
+<p><code>on</code>：连接的列名或者index， 也就是指明2个要连接的对象之间通过哪个列名或者索引名进行连接。</p>
+<p><code>how</code>：连接方式，类似sql语句中的（left ,right,inner,outer）,这里默认为&rsquo;left&rsquo;，      可选的参数有left, right , inner , outer   lsuffix: 左边的连接Key要用的下标</p>
+<p><code>rsuffix</code>: 右边的连接Key要用的下标</p>
+<p><code>sort</code>:对拼接后的列名按照字典顺序排序，默认为False，False的时候，保留按照左边的DataFrame进行排序的顺序。</p>
+</blockquote>
+<blockquote>
+<p>pd.merge(<em>left</em>, <em>right</em>, <em>how='inner&rsquo;</em>, <em>on=None</em>, <em>left_on=None</em>, right_on=None,         left_index=False, right_index=False, sort=False, suffixes=('_x&rsquo;, &lsquo;_y&rsquo;),          copy=True, indicator=False,validate=None)</p>
+<p><code>right</code>：要连接的目标数据，类型为DataFrame或者带列名的Series</p>
+<p><code>how</code>：连接方式，类似sql语句中的（left,right,inner,outer）,这里默认为&rsquo;inner&rsquo;，     可选的参数有left, right , inner , outer</p>
+<p><code>on</code>：连接的列名或者index， 也就是指明2个要连接的对象之间通过哪个列名或者索引名进行连接。</p>
+<p><code>left_on</code>： 指定左边的DataFrame以哪个列名或者索引名进行连接</p>
+<p><code>right_on</code>：指定右边的DataFrame以哪个列名或者索引名进行连接</p>
+<p><code>left_index</code>：用左边的DataFrame当做连接Key</p>
+<p><code>right_index</code>：用右边的DataFrame当做连接Key</p>
+<p><code>sort</code>：按照字典顺序对连接Key进行排序，默认为False，默认连接键的顺序取决于连接类型</p>
+<p><code>suffixes</code>：连接后的列名默认带下标 （'_x&rsquo; ,  &lsquo;_y&rsquo;）</p>
+<p><code>copy</code>：默认复制，如果设置为False，则尽可能的避免复制</p>
+<p><code>a</code>. 默认以相同的列名进行连接键</p>
+</blockquote>
+<a class="post-dummy-target" id="换角度看数据"></a><h5>换角度看数据</h5>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>df.stack</td>
+<td>将数据的列索引旋转为行索引</td>
+</tr>
+<tr>
+<td>df.unstack</td>
+<td>将数据的行索引旋转为列索引</td>
+</tr>
+</tbody>
+</table>
+<a class="post-dummy-target" id="数据聚合和运算"></a><h4>数据聚合和运算</h4>
+<a class="post-dummy-target" id="数据运用"></a><h5>数据运用</h5>
+<a class="post-dummy-target" id="groupby-机制"></a><h6>GroupBy 机制</h6>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/23/NatSQlueA7XwR5m.png" alt="" class="lazyload"></figure></p>
+<blockquote>
+<p>根据提供的一个或多个键分离各组，然后应用函数，产生新值</p>
+</blockquote>
+<p><strong>将男女存活率可视化</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="c1">#泰坦尼克号 groupby案例  #统计泰坦尼克号中男女存活人数</span>
+<span class="n">test4</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="s1">&#39;Survived&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">test4</span><span class="o">.</span><span class="n">reset_index</span><span class="p">([</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">drop</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">test5</span> <span class="o">=</span> <span class="n">test4</span><span class="p">[</span><span class="n">test4</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">test9</span> <span class="o">=</span> <span class="n">test5</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">]]</span>
+<span class="n">test9</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">all_male</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span>
+<span class="n">all_female</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span>
+<span class="n">sur_male</span> <span class="o">=</span> <span class="n">test9</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sur_female</span> <span class="o">=</span> <span class="n">test9</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">male_rate</span> <span class="o">=</span> <span class="n">sur_male</span> <span class="o">/</span> <span class="n">all_male</span>
+<span class="n">female_rate</span> <span class="o">=</span> <span class="n">sur_female</span> <span class="o">/</span> <span class="n">all_female</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;male&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">],[</span><span class="n">male_rate</span><span class="p">,</span> <span class="n">female_rate</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/23/PSnyplRaiEwmQo5.png" alt="" class="lazyload"></figure></p>
+<p><strong>各舱位存活率可视化</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">test8</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Embarked&#39;</span><span class="p">,</span><span class="s1">&#39;Survived&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">test8</span><span class="o">.</span><span class="n">reset_index</span><span class="p">([</span><span class="s1">&#39;Embarked&#39;</span><span class="p">,</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">drop</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">rate</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">]:</span>
+    <span class="n">all_</span> <span class="o">=</span> <span class="p">(</span><span class="n">test8</span><span class="p">[</span><span class="n">test8</span><span class="o">.</span><span class="n">Embarked</span> <span class="o">==</span> <span class="n">i</span><span class="p">][</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">sur</span> <span class="o">=</span> <span class="p">((</span><span class="n">test7</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">])</span>
+    <span class="n">rate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sur</span> <span class="o">/</span> <span class="n">all_</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">],</span><span class="n">rate</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/23/bYJe4vQVFoSM5sn.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="agg函数"></a><h6>agg函数</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Survived&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;Sex&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span>
+                            <span class="p">{</span><span class="s1">&#39;Sex&#39;</span><span class="p">:</span> <span class="s1">&#39;mean_sex&#39;</span><span class="p">,</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">:</span> <span class="s1">&#39;count_pclass&#39;</span><span class="p">})</span>
+
+<span class="n">DataFrame</span><span class="o">.</span><span class="n">agg</span><span class="err">（</span><span class="n">func</span><span class="err">，</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="err">，</span><span class="o">*</span> <span class="n">args</span><span class="err">，</span><span class="o">**</span> <span class="n">kwargs</span> <span class="err">）</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/23/yF9kfEBLUSbNovM.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="第三节-数据可视化"></a><h3>第三节 数据可视化</h3>
+<a class="post-dummy-target" id="设置颜色和格式"></a><h4>设置颜色和格式</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#CFA02F&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.8&#39;</span><span class="p">)</span>  <span class="c1"># 0.8代表灰色的深度</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/823pbMAH6I7eudF.png" alt="" class="lazyload"></figure></p>
+<blockquote>
+<ol>
+<li>八种内建颜色缩写
+b: blue
+g: green
+r: red
+c: cyan(青色，介于绿色和蓝色之间)
+m: magenta(洋红色，介于红色和紫色之间)
+y: yellow
+k: black
+w: white</li>
+<li>html十六进制表示颜色</li>
+<li>rgb元组</li>
+<li>灰色阴影表示</li>
+</ol>
+</blockquote>
+<hr>
+<a class="post-dummy-target" id="1线性"></a><h5>1.线性</h5>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>类型</th>
+<th>字符</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>  '-'	</code></td>
+<td>实线</td>
+<td><code>'--'</code></td>
+<td>虚线</td>
+</tr>
+<tr>
+<td><code>'-.'</code></td>
+<td>虚点线</td>
+<td><code>':'</code></td>
+<td>点线</td>
+</tr>
+<tr>
+<td><code>'.'</code></td>
+<td>点</td>
+<td><code>','</code></td>
+<td>像素点</td>
+</tr>
+<tr>
+<td><code>'o'</code></td>
+<td>圆点</td>
+<td><code>'v'</code></td>
+<td>下三角点</td>
+</tr>
+<tr>
+<td><code>'^'</code></td>
+<td>上三角点</td>
+<td><code>'&lt;'</code></td>
+<td>左三角点</td>
+</tr>
+<tr>
+<td><code>'&gt;'</code></td>
+<td>右三角点</td>
+<td><code>'1'</code></td>
+<td>下三叉点</td>
+</tr>
+<tr>
+<td><code>'2'</code></td>
+<td>上三叉点</td>
+<td><code>'3'</code></td>
+<td>左三叉点</td>
+</tr>
+<tr>
+<td><code>'4'</code></td>
+<td>右三叉点</td>
+<td><code>'s'</code></td>
+<td>正方点</td>
+</tr>
+<tr>
+<td><code>'p'</code></td>
+<td>五角点</td>
+<td><code>'*'</code></td>
+<td>星形点</td>
+</tr>
+<tr>
+<td><code>'h'</code></td>
+<td>六边形点1</td>
+<td><code>'H'</code></td>
+<td>六边形点2</td>
+</tr>
+<tr>
+<td><code>'+'</code></td>
+<td>加号点</td>
+<td><code>'x'</code></td>
+<td>乘号点</td>
+</tr>
+<tr>
+<td><code>'D'</code></td>
+<td>实心菱形点</td>
+<td><code>'d'</code></td>
+<td>瘦菱形点</td>
+</tr>
+<tr>
+<td><code>'_'</code></td>
+<td>横线点</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;^&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mf">1.5</span><span class="p">,</span><span class="s1">&#39;-.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/gYmEy46keBZnQJv.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="散点图"></a><h4>散点图</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">Y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1">#散点图,s是点的大小（面积），默认是20,c是颜色,alpha是透明度</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/tYWNilGX8sRHTLJ.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="多图绘制"></a><h5>多图绘制</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span> 
+<span class="c1"># 计算正弦和余弦曲线上的点的 x 和 y 坐标 </span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span>  <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">)</span> 
+<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  
+<span class="c1"># 建立 subplot 网格，高为 2，宽为 1  </span>
+<span class="c1"># 激活第一个 subplot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">)</span>  
+<span class="c1"># 绘制第一个图像 </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_sin</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sine&#39;</span><span class="p">)</span>  
+<span class="c1"># 将第二个 subplot 激活，并绘制第二个图像</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_cos</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Cosine&#39;</span><span class="p">)</span>  
+<span class="c1"># 展示图像</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/BWtVwaSs3ZHFzui.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="折线图"></a><h5>折线图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">Y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/sBUIFbptHCjyEr5.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="条形图"></a><h5>条形图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">N</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="s1">&#39;&#39;&#39;
+</span><span class="s1">left为x轴的位置序列(index)
+</span><span class="s1">height为y轴的数值序列，也就是柱形图的高度(y)
+</span><span class="s1">width为柱形图的宽度
+</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/lLBvszdDcwtV4Fj.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="绘制水平条形图"></a><h5>绘制水平条形图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">N</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/2EePBx4iUNSmDjr.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="多个条形图"></a><h5>多个条形图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">N</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">y2</span><span class="o">=</span><span class="p">[</span><span class="mi">14</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">25</span><span class="p">]</span>
+<span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="s1">&#39;&#39;&#39;
+</span><span class="s1">left为x轴的位置序列(index)
+</span><span class="s1">height为y轴的数值序列，也就是柱形图的高度(y)
+</span><span class="s1">width为柱形图的宽度
+</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mf">0.3</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/oSh2WKgQnCeTaEB.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="层叠图"></a><h5>层叠图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">N</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">y2</span><span class="o">=</span><span class="p">[</span><span class="mi">14</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">25</span><span class="p">]</span>
+<span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="s1">&#39;&#39;&#39;
+</span><span class="s1">left为x轴的位置序列(index)
+</span><span class="s1">height为y轴的数值序列，也就是柱形图的高度(y)
+</span><span class="s1">width为柱形图的宽度
+</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">bottom</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/rvmOn9b8hBjUt4P.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="直方图"></a><h5>直方图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">average</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">devation</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">X</span><span class="o">=</span><span class="n">average</span><span class="o">+</span><span class="n">devation</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1">#在服从标准正态分布的数据中取1000个随机数</span>
+<span class="s1">&#39;&#39;&#39;
+</span><span class="s1">画直方图函数的参数：
+</span><span class="s1">bins:长方形的数目
+</span><span class="s1">normed :为True是频率图，False是频数图，默认为False
+</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/VYLa4nZugjhTbPR.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="双变量直方图用颜色深浅表示频率大小"></a><h5>双变量直方图（用颜色深浅表示频率大小）</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/TpYezSDaGrM9Nfk.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="饼状图"></a><h5>饼状图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">]</span>    <span class="c1">#标签</span>
+<span class="n">fracs</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>        <span class="c1">#比例</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">explode</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.08</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1">#可以理解为扇形圆心到整个圆的圆心之间的距离</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fracs</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">label</span><span class="p">,</span><span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0f%%</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">explode</span><span class="o">=</span><span class="n">explode</span><span class="p">,</span><span class="n">shadow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>      
+<span class="c1">#autopct确定输出格式 ,%%表示一个&#39;%&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/ZRbUWTjBKstVeG1.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="箱形图"></a><h5>箱形图</h5>
+<blockquote>
+<p>箱型图能显示出一组数据的最大值、最小值、中位数、及上下四分位数。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;E&#39;</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>     <span class="c1">#默认随机数服从正态分布（loc=0,scale=1)</span>
+<span class="s1">&#39;&#39;&#39;
+</span><span class="s1">sym 调整好异常值的点的形状
+</span><span class="s1">whis 默认是1.5， 通过调整数值来设置异常值显示的数量，
+</span><span class="s1">如果想显示尽可能多的异常值，whis设置很小，否则很大
+</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span><span class="n">sym</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">whis</span><span class="o">=</span><span class="mf">1.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/RSk8wzMZujfr4mD.png" alt="" class="lazyload"></figure></p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/24/v38eZ71PxRmfigO.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="reference"></a><h5>Reference</h5>
+<blockquote>
+<p>CSDN: <a href="https://blog.csdn.net/qq_43212582/article/details/101473916#_120">https://blog.csdn.net/qq_43212582/article/details/101473916#_120</a></p>
+</blockquote>
+<a class="post-dummy-target" id="seaborn-学习"></a><h4>seaborn 学习</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="facetgrid-使用"></a><h5>FacetGrid 使用</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="c1">#新建facet 类对象   df：数据  col：值有几种，就生成几个图  hue：类别  aspect：横纵比</span>
+<span class="n">facet</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span> <span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s2">&#34;Survived&#34;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1">#sns.kdeplot:核密度估计图 &#39;Age&#39;:横坐标 &#39;shade&#39;:线下方阴影</span>
+<span class="n">facet</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">,</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="n">shade</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># xlim x区间</span>
+<span class="n">facet</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="c1"># 显示</span>
+<span class="n">facet</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/25/84hOyNCdMxcslAo.png" alt="" class="lazyload"></figure></p>
+<blockquote>
+<p><strong>kdeplot(核密度估计图)</strong></p>
+<p>核密度估计(kernel density estimation)是在<strong>概率论</strong>中用来估计未知的<strong>密度函数</strong>，属于非参数检验方法之一。通过核密度估计图可以比较直观的看出数据样本本身的分布特征。</p>
+</blockquote>
+<a class="post-dummy-target" id="基本画图"></a><h6>基本画图</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Embarked&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">([</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Embarked&#39;</span><span class="p">],</span> <span class="n">drop</span> <span class="o">=</span> <span class="bp">False</span> <span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">test1</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Embarked&#39;</span><span class="p">,</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">]]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;PassengerId&#39;</span> <span class="p">,</span><span class="n">hue</span> <span class="o">=</span> <span class="s1">&#39;Embarked&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">test1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>test1.head()</code></p>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">Age</th>
+<th align="right">Embarked</th>
+<th align="right">PassengerId</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">0.42</td>
+<td align="right">C</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">0.67</td>
+<td align="right">S</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">0.75</td>
+<td align="right">C</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">0.83</td>
+<td align="right">S</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">0.92</td>
+<td align="right">S</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/25/gacUSmjVw8A4sTu.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="第三章-模型建立与评估"></a><h2>第三章 模型建立与评估</h2>
+<a class="post-dummy-target" id="模型建立"></a><h3>模型建立</h3>
+<blockquote>
+<ul>
+<li>处理完前面的数据我们就得到建模数据，下一步是选择合适模型</li>
+<li>在进行模型选择之前我们需要先知道数据集最终是进行<strong>监督学习</strong>还是<strong>无监督学习</strong></li>
+<li>模型的选择一方面是通过我们的任务来决定的。</li>
+<li>除了根据我们任务来选择模型外，还可以根据数据样本量以及特征的稀疏性来决定</li>
+<li>刚开始我们总是先尝试使用一个基本的模型来作为其baseline，进而再训练其他模型做对比，最终选择泛化能力或性能比较好的模型</li>
+</ul>
+</blockquote>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/26/kmY57g8iLVCwHEa.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="切割训练集和测试集"></a><h4>切割训练集和测试集</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">clear_df</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">train_test_split</span> <span class="p">(</span><span class="o">*</span><span class="n">arrays</span><span class="err">，</span><span class="n">test_size</span><span class="p">,</span> <span class="n">train_size</span><span class="p">,</span> <span class="n">rondom_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>arrays</code>：特征数据和标签数据（array，list，dataframe等类型），要求所有数据长度相同。</p>
+<p><code>test_size / train_size</code>: 测试集/训练集的大小，若输入小数表示比例，若输入整数表示数据个数。</p>
+<p><code>rondom_state</code>：随机种子（一个整数），其实就是一个划分标记，对于同一个数据集，如果rondom_state相同，则划分结果也相同。</p>
+<p><code>shuffle</code>：是否打乱数据的顺序，再划分，默认True。</p>
+<p><code>stratify</code>：none或者array/series类型的数据，表示按这列进行分层采样。</p>
+</blockquote>
+<a class="post-dummy-target" id="逻辑回归"></a><h4>逻辑回归</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                   <span class="n">intercept_scaling</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                   <span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span>
+                   <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                   <span class="n">warm_start</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="常用方法"></a><h5>常用方法</h5>
+<blockquote>
+<ul>
+<li>
+<p><code>fit(X, y, sample_weight=None)</code></p>
+<ul>
+<li>拟合模型，用来训练LR分类器，其中X是训练样本，y是对应的标记向量</li>
+<li>返回对象，self。</li>
+</ul>
+</li>
+<li>
+<p><code>fit_transform(X, y=None, **fit_params)</code></p>
+<ul>
+<li>fit与transform的结合，先fit后transform。返回<code>X_new</code>:numpy矩阵。</li>
+</ul>
+</li>
+<li>
+<p><code>predict(X)</code></p>
+<ul>
+<li>用来预测样本，也就是分类，X是测试集。返回array。</li>
+</ul>
+</li>
+<li>
+<p><code>predict_proba(X)</code></p>
+<ul>
+<li>输出分类概率。返回每种类别的概率，按照分类类别顺序给出。如果是多分类问题，multi_class=&quot;multinomial&rdquo;，则会给出样本对于每种类别的概率。</li>
+<li>返回array-like。</li>
+</ul>
+</li>
+<li>
+<p><code>score(X, y, sample_weight=None)</code></p>
+</li>
+<li>
+<p>返回给定测试集合的平均准确率（mean accuracy），浮点型数值。</p>
+<ul>
+<li>对于多个分类返回，则返回每个类别的准确率组成的哈希矩阵。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="决策树"></a><h4>决策树</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">splitter</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 							<span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 										<span class="n">min_weight_fraction_leaf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 								<span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 										<span class="n">min_impurity_decrease</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">min_impurity_split</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 							<span class="n">class_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">presort</span><span class="o">=</span><span class="s1">&#39;deprecated&#39;</span><span class="p">,</span> <span class="n">ccp_alpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="随机森林"></a><h4>随机森林</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">bootstrap</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ccp_alpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                       <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+                       <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                       <span class="n">min_impurity_decrease</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">min_impurity_split</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                       <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                       <span class="n">min_weight_fraction_leaf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                       <span class="n">n_jobs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">oob_score</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                       <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">warm_start</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="模型评估"></a><h3>模型评估</h3>
+<a class="post-dummy-target" id="交叉验证"></a><h4>交叉验证</h4>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/CugrJldVOH7X1bk.png" alt="" class="lazyload"></figure></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Average cross-validation score: {:.2f}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="混淆矩阵"></a><h4>混淆矩阵</h4>
+<p>类偏科的误差度量</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/xrNwvLUVy83TqHp.png" alt="" class="lazyload"></figure></p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/KTPAfvblcDNpG2F.png" alt="" class="lazyload"></figure></p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/E6gRK9Lbxaypedi.png" alt="" class="lazyload"></figure></p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>英文</th>
+<th>预测</th>
+<th>实际</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正确肯定</td>
+<td>TP</td>
+<td>真</td>
+<td>真</td>
+</tr>
+<tr>
+<td>正确否定</td>
+<td>TN</td>
+<td>假</td>
+<td>假</td>
+</tr>
+<tr>
+<td>错误肯定</td>
+<td>FP</td>
+<td>假</td>
+<td>真</td>
+</tr>
+<tr>
+<td>错误否定</td>
+<td>FN</td>
+<td>真</td>
+<td>假</td>
+</tr>
+</tbody>
+</table>
+<p><strong>以经典案例恶性肿瘤病人</strong></p>
+<p>Precision 查准率 = $\frac {TP}{TP+FP}$   , 所有预测有恶性肿瘤的病人中，实际上有恶性肿瘤病人的百分比</p>
+<p>Recall 查全率 = $\frac {TP}{TP+FN}$ ，实际上有恶性肿瘤的病人中，成功预测的百分比</p>
+<blockquote>
+<p>From 吴恩达机器学习笔记</p>
+<ol>
+<li>构造简单学习算法</li>
+<li>用交叉验证集数据测试算法</li>
+<li>绘制学习曲线</li>
+<li>进行误差分析</li>
+</ol>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="c1">#训练模型</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="c1">#构建混淆矩阵</span>
+<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="c1">#精确率、召回率以及f1-score</span>
+<span class="k">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/dFeBQkhlGUVwLzK.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="roc曲线"></a><h4>ROC曲线</h4>
+<a class="post-dummy-target" id="什么是roc曲线"></a><h5>什么是ROC曲线</h5>
+<blockquote>
+<p>ROC的全称是Receiver Operating Characteristic Curve，中文名字叫“受试者工作特征曲线”，顾名思义，其主要的分析方法就是画这条特征曲线。这里在网上找了一个比较好的图样示例如下，</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/4nCGewr6PAKJZa8.png" alt="" class="lazyload"></figure></p>
+<p>该曲线的横坐标为假阳性率（False Positive Rate, FPR），N是真实负样本的个数，
+FP是N个负样本中被分类器预测为正样本的个数。</p>
+<p>纵坐标为真阳性率（True Positive Rate, TPR）</p>
+<p>P是真实正样本的个数，
+TP是P个正样本中被分类器预测为正样本的个数。
+$$
+TPR = \frac {TP}{TF + FN} ,\space \space FPR = \frac{FP}{FP+TN}</p>
+<p>$$</p>
+</blockquote>
+<a class="post-dummy-target" id="绘制步骤"></a><h5>绘制步骤</h5>
+<blockquote>
+<ol>
+<li>假设已经得出一系列样本被划分为正类的概率Score值，按照大小排序。</li>
+<li>从高到低，依次将“Score”值作为阈值threshold，当测试样本属于正样本的概率大于或等于这个threshold时，我们认为它为正样本，否则为负样本。举例来说，对于某个样本，其“Score”值为0.6，那么“Score”值大于等于0.6的样本都被认为是正样本，而其他样本则都认为是负样本。</li>
+<li>每次选取一个不同的threshold，得到一组FPR和TPR，以FPR值为横坐标和TPR值为纵坐标，即ROC曲线上的一点。</li>
+<li>根据3中的每个坐标点，画图。</li>
+</ol>
+</blockquote>
+<a class="post-dummy-target" id="利用roc曲线评价模型性能aucarea-under-curve"></a><h5>利用ROC曲线评价模型性能——AUC(Area Under Curve)</h5>
+<blockquote>
+<p>AUC表示ROC曲线下的面积，主要用于衡量模型的泛化性能，即分类效果的好坏。AUC是衡量二分类模型优劣的一种评价指标，表示正例排在负例前面的概率。一般在分类模型中，预测结果都是以概率的形式表现，如果要计算准确率，通常都会手动设置一个阈值来将对应的概率转化成类别，这个阈值也就很大程度上影响了模型准确率的计算。</p>
+<p>之所以采用AUC来评价，主要还是考虑到ROC曲线本身并不能直观的说明一个分类器性能的好坏，而AUC值作为一个数量值，具有可比较性，可以进行定量的比较。</p>
+</blockquote>
+<p><strong>AUC值的计算方法</strong>：</p>
+<ul>
+<li>将坐标点按照横坐标FPR排序 。</li>
+<li>计算第$i$个坐标点和第$i+1$个坐标点的间距$dx$ 。</li>
+<li>获取第$i$或者个$i+1$坐标点的纵坐标y。</li>
+<li>计算面积微元 $ds = ydx$</li>
+<li>对面积微元进行累加，得到AUC。</li>
+</ul>
+<p><strong>AUC值对模型性能的判断标准</strong>：</p>
+<ol>
+<li>AUC = 1，是完美分类器，采用这个预测模型时，存在至少一个阈值能得出完美预测。绝大多数预测的场合，不存在完美分类器。</li>
+<li>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</li>
+<li>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</li>
+<li>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</li>
+</ol>
+<p><strong>利用ROC曲线选择最佳模型</strong></p>
+<p>首先了解一下ROC曲线图上很重要的四个点：</p>
+<ol>
+<li>第一个点$(0,1)$，即FPR=0, TPR=1，这意味着FN（False Negative）=0，并且FP（False Positive）=0。意味着这是一个完美的分类器，它将所有的样本都正确分类。</li>
+<li>第二个点$(1,0)$，即FPR=1，TPR=0，意味着这是一个最糟糕的分类器，因为它成功避开了所有的正确答案。</li>
+<li>第三个点$(0,0)$，即FPR=TPR=0，即FP（False Positive）=TP（True Positive）=0，可以发现该分类器预测所有的样本都为负样本（Negative）。</li>
+<li>第四个点$(1,1)$，即FPR=TPR=1，分类器实际上预测所有的样本都为正样本。</li>
+</ol>
+<p>==ROC曲线图中，越靠近(0,1)的点对应的模型分类性能越好。==而且可以明确的一点是，ROC曲线图中的点对应的模型，它们的不同之处仅仅是在分类时选用的阈值(Threshold)不同，每个点所选用的阈值都对应某个样本被预测为正类的概率值。</p>
+<a class="post-dummy-target" id="不同模型之间选择最优模型"></a><h5>不同模型之间选择最优模型</h5>
+<p>当然最直观的比较方式就是基于AUC值，不同的模型对应的ROC曲线中，AUC值大的模型性能自然相对较好。而当AUC值近似相等时，有两种情况：第一种是ROC曲线之间没有交点；第二种是ROC曲线之间存在交点。在两个模型AUC值相等时，并不代表两个模型的分类性能也相等。</p>
+<p><strong>ROC曲线之间没有交点</strong></p>
+<p>如下图所示，A，B，C三个模型对应的ROC曲线之间交点，且AUC值是不相等的，此时明显更靠近(0,1)(0,1)(0,1)点的A模型的分类性能会更好。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/hvOB2TbqFog5aSN.png" alt="" class="lazyload"></figure></p>
+<p><strong>ROC曲线之间存在交点</strong></p>
+<p>如下图所示，模型A、B对应的ROC曲线相交却AUC值相等，此时就需要具体问题具体分析：当需要高Sensitivity值时，A模型好过B；当需要高Specificity值时，B模型好过A。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/08/27/EhDiQLOwbZFjS4z.png" alt="" class="lazyload"></figure></p>
+<p>更多参考 ： <a href="https://blog.csdn.net/qq_30992103/article/details/99730059">https://blog.csdn.net/qq_30992103/article/details/99730059</a></p>
+<a class="post-dummy-target" id="对于多分类的roc"></a><h4>对于多分类的ROC</h4>
+<p>经典的ROC曲线适用于对二分类问题进行模型评估，通常将它推广到多分类问题的方式有两种：</p>
+<ol>
+<li>对于每种类别，分别计算其将所有样本点的预测概率作为阈值所得到的$TPR$值(是这种类别为正，其他类别为负)，最后将每个取定的阈值下，对应所有类别的$TPR$值和$FPR$值分别求平均，得到最终对应这个阈值的$TPF$和$F PR $值</li>
+<li>首先，对于一个测试样本：1）标签只由0和1组成，1的位置表明了它的类别（可对应二分类问题中的‘’正’’），0就表示其他类别（‘’负‘’）；2）要是分类器对该测试样本分类正确，则该样本标签中1对应的位置在概率矩阵P中的值是大于0对应的位置的概率值的。</li>
+</ol>
+<p>上面的两个方法得到的ROC曲线是不同的，当然曲线下的面积AUC也是不一样的。 在python中，方法1和方法2分别对应sklearn.metrics.roc_auc_score函数中参数average值为’macro’和’micro’的情况。</p>
+</div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Xingyu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer></div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script></body>
+</html>

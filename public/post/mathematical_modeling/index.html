@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Mathematical_modeling 数学建模 | Xingyu &#39;s Note</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="About LoveIt Theme"><link rel="prev" href="/post/fcn_paper/" /><link rel="next" href="/post/numpy_learning/" /><link rel="canonical" href="/post/mathematical_modeling/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Mathematical_modeling 数学建模" />
+<meta property="og:description" content="数学建模 [TOC]
+初等模型 核军备竞赛   冷战时期美苏声称为了保卫自己的安全，实行“核威胁战略”， 核军备竞赛不断升级。 随着前苏联的解体和冷战的结束，双方通过了一系列核裁军协议。 在什么情况下双方的核军备竞赛不会无限扩张，而存在暂时的平衡状态。 估计平衡状态下双方拥有的最少的核武器数量，这个数量受哪些因素影响。 当一方采取加强防御、提高武器精度、发展多弹头导弹等措施，平衡状态会发生什么变化。   模型假设 以双方（战略）核导弹数量描述核军备的大小。假定双方采取如下同样的核威胁战略：
+ 认为对方可能发起所谓第一次核打击，即倾其全部核导弹攻击己方的核导弹基地： 己方在经受第一次核打击后，应保存足够的核导弹，给对方重要目标以毁灭性的打击。  在任一方实施第一次核打击时，假定一枚核导弹只能攻击对方的一个核导弹基地。
+摧毁这个基地的可能性是常数，它由一方的攻击精度和另一方的防御能力决定。
+图的模型 $ y= f(x)$~甲有$x$枚导弹，乙所需的最少导弹数（乙安全线）
+$x = g(y)$~乙有$y$枚导弹，甲所需的最少导弹数 （甲安全线）
+当$x =0$，$y = y_0$, $y_0$~乙方的威胁值
+$y_0$~甲方实行第一次打击后已经没有导弹，乙方为毁灭甲方工业、交通中心等目标所需导弹数。
+
+$y = f(x)$ 是一条上凸曲线，若非上凸曲线，图2无交点
+分析模型 乙方残存率$s $~甲方一枚导弹攻击乙方一个基地，基地未被摧毁的概率。
+ $x &lt; y$  甲方以$x$枚导弹攻击乙方$y$个基地中的$x$个，$sx$个基地未被摧毁， $y - x$个基地未被攻击。
+$y_0 = sx &#43; y - x$ =&gt; $y = y_0 &#43; (1-s)x$
+  $x =y$" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/mathematical_modeling/" />
+<meta property="article:published_time" content="2020-10-11T15:02:47+08:00" />
+<meta property="article:modified_time" content="2020-10-11T15:02:47+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mathematical_modeling 数学建模"/>
+<meta name="twitter:description" content="数学建模 [TOC]
+初等模型 核军备竞赛   冷战时期美苏声称为了保卫自己的安全，实行“核威胁战略”， 核军备竞赛不断升级。 随着前苏联的解体和冷战的结束，双方通过了一系列核裁军协议。 在什么情况下双方的核军备竞赛不会无限扩张，而存在暂时的平衡状态。 估计平衡状态下双方拥有的最少的核武器数量，这个数量受哪些因素影响。 当一方采取加强防御、提高武器精度、发展多弹头导弹等措施，平衡状态会发生什么变化。   模型假设 以双方（战略）核导弹数量描述核军备的大小。假定双方采取如下同样的核威胁战略：
+ 认为对方可能发起所谓第一次核打击，即倾其全部核导弹攻击己方的核导弹基地： 己方在经受第一次核打击后，应保存足够的核导弹，给对方重要目标以毁灭性的打击。  在任一方实施第一次核打击时，假定一枚核导弹只能攻击对方的一个核导弹基地。
+摧毁这个基地的可能性是常数，它由一方的攻击精度和另一方的防御能力决定。
+图的模型 $ y= f(x)$~甲有$x$枚导弹，乙所需的最少导弹数（乙安全线）
+$x = g(y)$~乙有$y$枚导弹，甲所需的最少导弹数 （甲安全线）
+当$x =0$，$y = y_0$, $y_0$~乙方的威胁值
+$y_0$~甲方实行第一次打击后已经没有导弹，乙方为毁灭甲方工业、交通中心等目标所需导弹数。
+
+$y = f(x)$ 是一条上凸曲线，若非上凸曲线，图2无交点
+分析模型 乙方残存率$s $~甲方一枚导弹攻击乙方一个基地，基地未被摧毁的概率。
+ $x &lt; y$  甲方以$x$枚导弹攻击乙方$y$个基地中的$x$个，$sx$个基地未被摧毁， $y - x$个基地未被攻击。
+$y_0 = sx &#43; y - x$ =&gt; $y = y_0 &#43; (1-s)x$
+  $x =y$"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Mathematical_modeling 数学建模",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/post\/mathematical_modeling\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "post","wordcount":  176 ,
+        "url": "\/post\/mathematical_modeling\/","datePublished": "2020-10-11T15:02:47\u002b08:00","dateModified": "2020-10-11T15:02:47\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="/">Xingyu &#39;s Note</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="/">Xingyu &#39;s Note</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">Mathematical_modeling 数学建模</h1><div class="post-content"><h1 id="数学建模">数学建模</h1>
+<p>[TOC]</p>
+<a class="post-dummy-target" id="初等模型"></a><h2>初等模型</h2>
+<a class="post-dummy-target" id="核军备竞赛"></a><h3>核军备竞赛</h3>
+<blockquote>
+<ul>
+<li>冷战时期美苏声称为了保卫自己的安全，实行“核威胁战略”， 核军备竞赛不断升级。</li>
+<li>随着前苏联的解体和冷战的结束，双方通过了一系列核裁军协议。</li>
+<li>在什么情况下双方的核军备竞赛不会无限扩张，而存在暂时的平衡状态。</li>
+<li>估计平衡状态下双方拥有的最少的核武器数量，这个数量受哪些因素影响。</li>
+<li>当一方采取加强防御、提高武器精度、发展多弹头导弹等措施，平衡状态会发生什么变化。</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="模型假设"></a><h4>模型假设</h4>
+<p>以双方（战略）核导弹数量描述核军备的大小。假定双方采取如下同样的核威胁战略：</p>
+<ul>
+<li>认为对方可能发起所谓第一次核打击，即倾其全部核导弹攻击己方的核导弹基地：</li>
+<li>己方在经受第一次核打击后，应保存足够的核导弹，给对方重要目标以毁灭性的打击。</li>
+</ul>
+<p>在任一方实施第一次核打击时，假定一枚核导弹只能攻击对方的一个核导弹基地。</p>
+<p>摧毁这个基地的可能性是常数，它由一方的攻击精度和另一方的防御能力决定。</p>
+<a class="post-dummy-target" id="图的模型"></a><h4>图的模型</h4>
+<p>$ y= f(x)$~甲有$x$枚导弹，乙所需的最少导弹数（乙安全线）</p>
+<p>$x = g(y)$~乙有$y$枚导弹，甲所需的最少导弹数 （甲安全线）</p>
+<p>当$x =0$，$y = y_0$,  $y_0$~乙方的威胁值</p>
+<p>$y_0$~甲方实行第一次打击后已经没有导弹，乙方为毁灭甲方工业、交通中心等目标所需导弹数。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/10/11/Xg47zN2GTARJ9cj.png" alt="" class="lazyload"></figure></p>
+<p>$y = f(x)$ 是一条上凸曲线，若非上凸曲线，图2无交点</p>
+<a class="post-dummy-target" id="分析模型"></a><h4>分析模型</h4>
+<p>乙方<strong>残存率$s $</strong>~甲方一枚导弹攻击乙方一个基地，基地未被摧毁的概率。</p>
+<ul>
+<li>$x &lt; y$</li>
+</ul>
+<p>甲方以$x$枚导弹攻击乙方$y$个基地中的$x$个，$sx$个基地未被摧毁， $y - x$个基地未被攻击。</p>
+<p>$y_0 = sx + y - x$           =&gt;         $y = y_0 + (1-s)x$</p>
+<ul>
+<li>
+<p>$x =y$</p>
+<p>$y_0 = sy$                            =&gt;       $y = \frac {y_0}s$</p>
+</li>
+<li>
+<p>$y&lt;x&lt;2y$</p>
+<p>乙的$x-y$个基地被攻击两次，$s^2(x-y)$个未被摧毁</p>
+<p>$y-(x-y) = 2y-x$个被攻击一次，$s(2y-x)$个未被摧毁</p>
+<p>$y_0 = s^2(x-y)+s(2y-x)$ =&gt; $y = \frac {y_0}{s(2-s)} + \frac {1-s}{2-s}x$</p>
+</li>
+<li>
+<p>$x = 2y$</p>
+<p>$y_0 = s^2y$                        =&gt;       $y = \frac {y_0}{s^2}$</p>
+</li>
+<li>
+<p>$x = ay$</p>
+<p>$y = \frac {y_0}{s^a} = \frac {y_0}{s^{x/y}}$</p>
+</li>
+</ul>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/10/11/CXuxPSO6GtdUreT.png" alt="" class="lazyload"></figure></p>
+<p><strong>$y_0$~威慑值        s~残存率</strong></p>
+<p>利用微积分的知识可知，$y$是一条上凸的曲线，且</p>
+<ul>
+<li>$y_0$ 变大，曲线上移、变陡。</li>
+<li>$s$ 变大，$y$减小， 曲线变平。</li>
+</ul>
+<a class="post-dummy-target" id="模型解释"></a><h4>模型解释</h4>
+<ul>
+<li>
+<p>甲方增加经费保护及疏散工业、交通中心等目标。</p>
+<p>=》乙方威胁值 $y_0$变大（其他因素不变）</p>
+<p>=》乙安全线 $y= f(x)$上移</p>
+<p>=》平衡点 $P \rightarrow P'$</p>
+<p>=》$x&rsquo;_m &gt; x_m, y&rsquo;_m&gt;y_m$</p>
+<p>甲方的被动防御也会使双方军备竞赛升级。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/10/11/3AJfyn51V9Hx6OW.png" alt="" class="lazyload"></figure></p>
+</li>
+<li>
+<p>甲方将固定核导弹基地改进为可移动发射架。</p>
+<p>=》 乙安全线$y= f(x)$不变，甲方残存率变大，需要的核武器变少， 威慑值$x_0$不变</p>
+<p>=》 $x$减小，甲安全线$x = g(y)$ 向$y$轴靠近</p>
+<p>=》 $P \rightarrow P'$   $x&rsquo;_m &lt; x_m, y&rsquo;_m &lt; y_m$</p>
+<p>甲方这种单独行为，会使双方的核导弹减少</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/10/11/p7EI4WZNjvqOBf5.png" alt="" class="lazyload"></figure></p>
+</li>
+<li>
+<p>双方发展多弹头导弹，每个弹头可以独立地摧毁目标。</p>
+<p>（$x,y$仍为双方核导弹的数量）</p>
+<p>=》 双方威慑值$x_0,y_0$和残存率$s$均减小</p>
+<p>乙安全线 $y=f(x)$</p>
+<p>$y_0$减小 $\rightarrow$ $y$下移且变平</p>
+<p>$s$变小   $\rightarrow$ $y$增加且变陡</p>
+<p>=》 $P \rightarrow P&rsquo; ?$  $P \rightarrow P&rsquo;&rsquo; ?$</p>
+<p>双方导弹增加还是减少，需要更多信息及更详细的分析。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://i.loli.net/2020/10/11/VlcJLRIsrnCgW81.png" alt="" class="lazyload"></figure></p>
+</li>
+</ul>
+<a class="post-dummy-target" id="评述"></a><h4>评述</h4>
+<ul>
+<li>对“核威胁战略”做一些合理、简化假设，用图的模型描述双方核武器相互制约、达到平衡的过程。</li>
+<li>提出<strong>安全曲线</strong>的概念，给出它的一般形式。</li>
+<li>通过更精细的分析找到影响安全线的参数：<strong>威慑值和残存率</strong>，给出安全线的分析表达式。</li>
+<li>利用模型对核军备竞赛中的一些现象作出合理解释。</li>
+</ul>
+</div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Xingyu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer></div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script></body>
+</html>

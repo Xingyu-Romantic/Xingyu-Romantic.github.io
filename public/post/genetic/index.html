@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Genetic | Xingyu &#39;s Note</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="About LoveIt Theme"><link rel="prev" href="/post/opencv_learning/" /><link rel="next" href="/post/pytorch/" /><link rel="canonical" href="/post/genetic/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Genetic" />
+<meta property="og:description" content="遗传算法 通过编码、设置种群、设置适应度函数、遗传操作、解码产生需要的解。f(x)=x*sin(x)&#43;1，x[0,2],求f(x)的最大值、最小值。
+
+定义函数 （即 适应度函数） 1 2 3 4  import math import numpy as np import matplotlib.pyplot as plt import random   1 2  def f(x): return x * np.sin(x) &#43; 1   绘制函数图像 1 2 3 4  plt.rc_context({&#39;axes.edgecolor&#39;:&#39;orange&#39;, &#39;xtick.color&#39;:&#39;green&#39;, &#39;ytick.color&#39;:&#39;green&#39;, &#39;figure.facecolor&#39;:&#39;white&#39;}) x = np.arange(0,2,0.1) plt.plot(x,f(x)) plt.show()   png
+随机产生种群 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16  def product_origin(population_size, length): &#34;&#34;&#34; :population_size: 种群大小, :length: DNA长度 &#34;&#34;&#34; population = np." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/genetic/" />
+<meta property="article:published_time" content="2020-11-06T17:25:24+08:00" />
+<meta property="article:modified_time" content="2020-11-06T17:25:24+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Genetic"/>
+<meta name="twitter:description" content="遗传算法 通过编码、设置种群、设置适应度函数、遗传操作、解码产生需要的解。f(x)=x*sin(x)&#43;1，x[0,2],求f(x)的最大值、最小值。
+
+定义函数 （即 适应度函数） 1 2 3 4  import math import numpy as np import matplotlib.pyplot as plt import random   1 2  def f(x): return x * np.sin(x) &#43; 1   绘制函数图像 1 2 3 4  plt.rc_context({&#39;axes.edgecolor&#39;:&#39;orange&#39;, &#39;xtick.color&#39;:&#39;green&#39;, &#39;ytick.color&#39;:&#39;green&#39;, &#39;figure.facecolor&#39;:&#39;white&#39;}) x = np.arange(0,2,0.1) plt.plot(x,f(x)) plt.show()   png
+随机产生种群 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16  def product_origin(population_size, length): &#34;&#34;&#34; :population_size: 种群大小, :length: DNA长度 &#34;&#34;&#34; population = np."/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Genetic",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/post\/genetic\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "post","wordcount":  431 ,
+        "url": "\/post\/genetic\/","datePublished": "2020-11-06T17:25:24\u002b08:00","dateModified": "2020-11-06T17:25:24\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="/">Xingyu &#39;s Note</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="/">Xingyu &#39;s Note</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">Genetic</h1><div class="post-content"><h1 id="遗传算法">遗传算法</h1>
+<p>通过编码、设置种群、设置适应度函数、遗传操作、解码产生需要的解。f(x)=x*sin(x)+1，x[0,2],求f(x)的最大值、最小值。</p>
+<p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://xingyublog.netlify.app/static/Gen.png" alt="" class="lazyload"></figure></p>
+<a class="post-dummy-target" id="定义函数-即-适应度函数"></a><h2>定义函数 （即 适应度函数）</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> 
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="绘制函数图像"></a><h3>绘制函数图像</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">rc_context</span><span class="p">({</span><span class="s1">&#39;axes.edgecolor&#39;</span><span class="p">:</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;xtick.color&#39;</span><span class="p">:</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;ytick.color&#39;</span><span class="p">:</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;figure.facecolor&#39;</span><span class="p">:</span><span class="s1">&#39;white&#39;</span><span class="p">})</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://xingyublog.netlify.app/static/output_7_0.png" alt="png" class="lazyload"><figcaption class="image-caption">png</figcaption></figure></p>
+<a class="post-dummy-target" id="随机产生种群"></a><h2>随机产生种群</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">product_origin</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    :population_size: 种群大小,
+</span><span class="s2">    :length: DNA长度
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">population_size</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+    <span class="c1">#二维列表，包含染色体和基因</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">population_size</span><span class="p">):</span>
+        <span class="n">temporary</span><span class="o">=</span><span class="p">[]</span>
+        <span class="c1">#染色体暂存器</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+            <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#随机产生一个染色体,由二进制数组成</span>
+            <span class="c1">#将染色体添加到种群中</span>
+    <span class="k">return</span> <span class="n">population</span>
+            <span class="c1"># 将种群返回，种群是个二维数组，个体和染色体两维</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="二进制转十进制"></a><h2>二进制转十进制</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="s2">&#34;&#34;&#34;
+</span><span class="s2">def translation(num):
+</span><span class="s2">    return int(str(num),2)
+</span><span class="s2">&#34;&#34;&#34;</span>
+<span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">chromosome_length</span><span class="p">):</span>
+    <span class="n">temporary</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+        <span class="n">total</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chromosome_length</span><span class="p">):</span>
+            <span class="n">total</span><span class="o">+=</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">4</span><span class="p">))</span>
+        <span class="n">temporary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">temporary</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="选择"></a><h2>选择</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">cumsum</span><span class="p">(</span><span class="n">fitness1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness1</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># range(start,stop,[step])</span>
+    <span class="c1"># 倒计数</span>
+        <span class="n">total</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">j</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">total</span><span class="o">+=</span><span class="n">fitness1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">j</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">fitness1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">total</span>
+        <span class="n">fitness1</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">fitness</span><span class="p">):</span>
+        <span class="n">new_fitness</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness</span><span class="p">)):</span>
+            <span class="n">new_fitness</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fitness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span> <span class="n">total</span> <span class="p">)</span>
+        <span class="n">cumsum</span><span class="p">(</span><span class="n">new_fitness</span><span class="p">)</span>
+        <span class="n">ms</span><span class="o">=</span><span class="p">[]</span>
+    <span class="c1">#存活的种群</span>
+        <span class="n">population_length</span><span class="o">=</span><span class="n">pop_len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="c1">#求出种群长度</span>
+    <span class="c1">#根据随机数确定哪几个能存活</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_len</span><span class="p">):</span>
+            <span class="n">ms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+    <span class="c1"># 产生种群个数的随机值</span>
+    <span class="c1"># ms.sort()</span>
+    <span class="c1"># 存活的种群排序</span>
+        <span class="n">fitin</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">newin</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">new_population</span><span class="o">=</span><span class="n">new_pop</span><span class="o">=</span><span class="n">population</span>
+     <span class="c1">#轮盘赌方式</span>
+        <span class="k">while</span> <span class="n">newin</span><span class="o">&lt;</span><span class="n">pop_len</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">ms</span><span class="p">[</span><span class="n">newin</span><span class="p">]</span><span class="o">&lt;</span><span class="n">new_fitness</span><span class="p">[</span><span class="n">fitin</span><span class="p">]):</span>
+                    <span class="n">new_pop</span><span class="p">[</span><span class="n">newin</span><span class="p">]</span><span class="o">=</span><span class="n">population</span><span class="p">[</span><span class="n">fitin</span><span class="p">]</span>
+                    <span class="n">newin</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                 <span class="n">fitin</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">population</span><span class="o">=</span><span class="n">new_pop</span>
+    
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="交叉"></a><h2>交叉</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">pc</span><span class="p">):</span>
+<span class="c1">#pc是概率阈值，选择单点交叉还是多点交叉，生成新的交叉个体，这里没用</span>
+    <span class="n">pop_len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_len</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&lt;</span> <span class="n">pc</span><span class="p">):</span>
+            <span class="n">cpoint</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+           <span class="c1">#在种群个数内随机生成单点交叉点</span>
+            <span class="n">temporary1</span><span class="o">=</span><span class="p">[]</span>
+            <span class="n">temporary2</span><span class="o">=</span><span class="p">[]</span>
+            <span class="n">temporary1</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">cpoint</span><span class="p">])</span>
+            <span class="n">temporary1</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">cpoint</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])])</span>
+           <span class="c1">#将tmporary1作为暂存器，暂时存放第i个染色体中的前0到cpoint个基因，</span>
+           <span class="c1">#然后再把第i+1个染色体中的后cpoint到第i个染色体中的基因个数，补充到temporary2后面</span>
+            <span class="n">temporary2</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">cpoint</span><span class="p">])</span>
+            <span class="n">temporary2</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">cpoint</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])])</span>
+        <span class="c1"># 将tmporary2作为暂存器，暂时存放第i+1个染色体中的前0到cpoint个基因，</span>
+        <span class="c1"># 然后再把第i个染色体中的后cpoint到第i个染色体中的基因个数，补充到temporary2后面</span>
+            <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">temporary1</span>
+            <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">temporary2</span>
+        <span class="c1"># 第i个染色体和第i+1个染色体基因重组/交叉完成</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="变异"></a><h2>变异</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mutation</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">pm</span><span class="p">):</span>
+     <span class="c1"># pm是概率阈值</span>
+    <span class="n">px</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+    <span class="c1"># 求出种群中所有种群/个体的个数</span>
+    <span class="n">py</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># 染色体/个体基因的个数</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">px</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&lt;</span><span class="n">pm</span><span class="p">):</span>
+            <span class="n">mpoint</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">py</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mpoint</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+               <span class="c1">#将mpoint个基因进行单点随机变异，变为0或者1</span>
+                <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mpoint</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mpoint</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+ 
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="挑选最好"></a><h2>挑选最好</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">best</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">x_10</span><span class="p">,</span> <span class="n">fitness</span><span class="p">):</span>
+    <span class="n">maxidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x_10</span><span class="p">[</span><span class="n">maxidx</span><span class="p">],</span> <span class="n">fitness</span><span class="p">[</span><span class="n">maxidx</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="绘图"></a><h2>绘图</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">iteration</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">iteration</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="遗传算法-1"></a><h2>遗传算法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">population_size</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1">#种群大小</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># DNA长度</span>
+<span class="n">iteration</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1"># 迭代次数</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="c1"># 变异概率</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="mf">0.6</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+<span class="c1"># 1 . 初始化种群</span>
+<span class="n">population</span> <span class="o">=</span> <span class="n">product_origin</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iteration</span><span class="p">):</span>
+    <span class="n">x_10</span> <span class="o">=</span> <span class="n">translation</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+    <span class="n">fitness</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x_10</span><span class="p">)</span>
+    <span class="n">best_individual</span><span class="p">,</span> <span class="n">best_fitness</span> <span class="o">=</span> <span class="n">best</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">x_10</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">best_fitness</span><span class="p">,</span> <span class="n">best_individual</span><span class="p">])</span>
+    <span class="n">selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+    <span class="n">crossover</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">pc</span><span class="p">)</span>
+    <span class="n">mutation</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">pm</span><span class="p">)</span>
+
+<span class="n">results</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="n">iteration</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><img src="/svg/loading.min.svg" data-sizes="auto" data-src="https://xingyublog.netlify.app/static/output_25_0.png" alt="png" class="lazyload"><figcaption class="image-caption">png</figcaption></figure></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+</code></pre></td></tr></table>
+</div>
+</div></div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Xingyu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer></div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script></body>
+</html>

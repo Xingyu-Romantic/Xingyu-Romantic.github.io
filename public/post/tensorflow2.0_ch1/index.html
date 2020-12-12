@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Tensorflow2_CH1 | Xingyu &#39;s Note</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noodp" />
+<meta name="Description" content="Tensorflow2.0 keras学习"><link rel="next" href="/post/hands-on-data-analysis/" /><link rel="canonical" href="/post/tensorflow2.0_ch1/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Tensorflow2_CH1" />
+<meta property="og:description" content="Tensorflow2.0 keras学习" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/tensorflow2.0_ch1/" />
+<meta property="article:published_time" content="2020-08-24T13:04:48+08:00" />
+<meta property="article:modified_time" content="2020-08-24T13:04:48+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tensorflow2_CH1"/>
+<meta name="twitter:description" content="Tensorflow2.0 keras学习"/>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Tensorflow2_CH1",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/post\/tensorflow2.0_ch1\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "post","wordcount":  1247 ,
+        "url": "\/post\/tensorflow2.0_ch1\/","datePublished": "2020-08-24T13:04:48\u002b08:00","dateModified": "2020-08-24T13:04:48\u002b08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": "Tensorflow2.0 keras学习"
+    }
+    </script><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/css/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/css/lib/animate/animate.min.css"></head>
+    <body><script>
+            window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-header animated bounceIn">
+            <a href="/">Xingyu &#39;s Note</a>
+        </div>
+        <div class="navbar-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"><i class="fas fa-language fa-fw"></i></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><nav class="navbar-mobile">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <div class="navbar-header-title animated bounceIn">
+                <a href="/">Xingyu &#39;s Note</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="navbar-menu" id="mobile-menu"><a class="menu-item" href="/post" title="">Post</a><a class="menu-item" href="/tags" title="">Tags</a><a class="menu-item" href="/categories" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="https://hugo-loveit-zh.netlify.com" title="简体中文"></a><a href="javascript:void(0);" class="theme-switch"><i class="fas fa-adjust fa-rotate-180 fa-fw" title="Switch Theme"></i></a>
+        </div>
+    </div>
+</nav><main class="main">
+                <div class="container"><div class="page single"><h1 class="post-title animated pulse faster">Tensorflow2_CH1</h1><div class="post-content"><h1 id="tensorflow-2x">Tensorflow 2.x</h1>
+<blockquote>
+<p>B站视频： BV1zE411T7nb</p>
+</blockquote>
+<a class="post-dummy-target" id="hello-world"></a><h6>Hello, World!</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mean_squared_error&#39;</span><span class="p">)</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="mf">10.0</span><span class="p">]))</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="example-1-recognize-shoes-and-t-shirts"></a><h6>Example 1: recognize shoes and t-shirts</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 导入相关包</span>
+<span class="kn">import</span> <span class="nn">keras</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="c1">#写回调类</span>
+<span class="k">class</span> <span class="nc">myCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">)</span><span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Loss is low so cancelling training!&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="c1">#调用回调函数，取消训练</span>
+<span class="n">callbacks</span> <span class="o">=</span> <span class="n">myCallback</span><span class="p">()</span>
+<span class="c1"># 加载数据集</span>
+<span class="n">fashion_mnist</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span>
+<span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="c1"># 处理数据</span>
+<span class="n">train_images</span> <span class="o">=</span> <span class="n">train_images</span> <span class="o">/</span> <span class="mf">255.0</span>
+<span class="n">test_images</span> <span class="o">=</span> <span class="n">test_images</span> <span class="o">/</span> <span class="mf">255.0</span>
+<span class="c1"># 定义模型</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="c1"># 设置模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(),</span>
+             <span class="n">loss</span> <span class="o">=</span> <span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span>
+             <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+<span class="c1"># 训练模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">callbacks</span><span class="p">])</span>
+<span class="c1"># 评估模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="应用卷积神经网络"></a><h5>应用卷积神经网络</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+	<span class="c1">#卷积层1   生成64个过滤器  最后维度   (28-3+1)*(28-3+1)*64 = 43264</span>
+	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span>
+	<span class="c1">#池化层1 默认s=(2,2)   ((26-2)/2+1)*((26-2)/2+1)*64 = 10816</span>
+	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+	<span class="c1">#卷积层2    (13-3+1)*(13-3+1)*64 =  7744</span>
+	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+	<span class="c1">#池化层2    ((11-2)/2+1)*((11-2)/2+1)*64 = 1600</span>
+ 	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+	<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="tfkeraslayersconv2d"></a><h6>tf.keras.layers.Conv2D</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dilation_rate</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;glorot_uniform&#39;</span><span class="p">,</span> <span class="n">bias_initializer</span><span class="o">=</span><span class="s1">&#39;zeros&#39;</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bias_regularizer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activity_regularizer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">kernel_constraint</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bias_constraint</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<ul>
+<li><strong>filters</strong>: 整数，输出空间的维度 （即卷积中滤波器的输出数量）。</li>
+<li><strong>kernel_size</strong>: 一个整数，或者 2 个整数表示的元组或列表， 指明 2D 卷积窗口的宽度和高度。 可以是一个整数，为所有空间维度指定相同的值。</li>
+<li><strong>strides</strong>: 一个整数，或者 2 个整数表示的元组或列表， 指明卷积沿宽度和高度方向的步长。 可以是一个整数，为所有空间维度指定相同的值。 指定任何 stride 值 != 1 与指定 <code>dilation_rate</code> 值 != 1 两者不兼容。</li>
+<li><strong>padding</strong>: <code>&quot;valid&quot;</code> 或 <code>&quot;same&quot;</code> (大小写敏感)。</li>
+<li><strong>data_format</strong>: 字符串， <code>channels_last</code> (默认) 或 <code>channels_first</code> 之一，表示输入中维度的顺序。 <code>channels_last</code> 对应输入尺寸为 <code>(batch, height, width, channels)</code>， <code>channels_first</code> 对应输入尺寸为 <code>(batch, channels, height, width)</code>。 它默认为从 Keras 配置文件 <code>~/.keras/keras.json</code> 中 找到的 <code>image_data_format</code> 值。 如果你从未设置它，将使用 <code>channels_last</code>。</li>
+<li><strong>dilation_rate</strong>: 一个整数或 2 个整数的元组或列表， 指定膨胀卷积的膨胀率。 可以是一个整数，为所有空间维度指定相同的值。 当前，指定任何 <code>dilation_rate</code> 值 != 1 与 指定 stride 值 != 1 两者不兼容。</li>
+<li><strong>activation</strong>: 要使用的激活函数 (详见 <a href="https://keras.io/zh/activations/" target="_blank">activations</a>)。 如果你不指定，则不使用激活函数 (即线性激活： <code>a(x) = x</code>)。</li>
+<li><strong>use_bias</strong>: 布尔值，该层是否使用偏置向量。</li>
+<li><strong>kernel_initializer</strong>: <code>kernel</code> 权值矩阵的初始化器 (详见 <a href="https://keras.io/zh/initializers/" target="_blank">initializers</a>)。</li>
+<li><strong>bias_initializer</strong>: 偏置向量的初始化器 (详见 <a href="https://keras.io/zh/initializers/" target="_blank">initializers</a>)。</li>
+<li><strong>kernel_regularizer</strong>: 运用到 <code>kernel</code> 权值矩阵的正则化函数 (详见 <a href="https://keras.io/zh/regularizers/" target="_blank">regularizer</a>)。</li>
+<li><strong>bias_regularizer</strong>: 运用到偏置向量的正则化函数 (详见 <a href="https://keras.io/zh/regularizers/" target="_blank">regularizer</a>)。</li>
+<li><strong>activity_regularizer</strong>: 运用到层输出（它的激活值）的正则化函数 (详见 <a href="https://keras.io/zh/regularizers/" target="_blank">regularizer</a>)。</li>
+<li><strong>kernel_constraint</strong>: 运用到 <code>kernel</code> 权值矩阵的约束函数 (详见 <a href="https://keras.io/zh/constraints/" target="_blank">constraints</a>)。</li>
+<li><strong>bias_constraint</strong>: 运用到偏置向量的约束函数 (详见 <a href="https://keras.io/zh/constraints/" target="_blank">constraints</a>)。</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="keraslayersmaxpooling2d"></a><h6>keras.layers.MaxPooling2D</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<ul>
+<li><strong>pool_size</strong>: 整数，或者 2 个整数表示的元组， 沿（垂直，水平）方向缩小比例的因数。 （2，2）会把输入张量的两个维度都缩小一半。 如果只使用一个整数，那么两个维度都会使用同样的窗口长度。</li>
+<li><strong>strides</strong>: 整数，2 个整数表示的元组，或者是 <code>None</code>。 表示步长值。 如果是 <code>None</code>，那么默认值是 <code>pool_size</code>。</li>
+<li><strong>padding</strong>: <code>&quot;valid&quot;</code> 或者 <code>&quot;same&quot;</code> （区分大小写）。</li>
+<li><strong>data_format</strong>: 字符串，<code>channels_last</code> (默认)或 <code>channels_first</code> 之一。 表示输入各维度的顺序。 <code>channels_last</code> 代表尺寸是 <code>(batch, height, width, channels)</code> 的输入张量， 而 <code>channels_first</code> 代表尺寸是 <code>(batch, channels, height, width)</code> 的输入张量。 默认值根据 Keras 配置文件 <code>~/.keras/keras.json</code> 中的 <code>image_data_format</code> 值来设置。 如果还没有设置过，那么默认值就是 &ldquo;channels_last&rdquo;。</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="图片数据生成器"></a><h5>图片数据生成器</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+
+<span class="n">train_datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescalse</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">train_datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span>
+			<span class="n">train_dir</span><span class="p">,</span>
+    		<span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">),</span>
+    		<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    		<span class="n">class_mode</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>
+			<span class="p">)</span>
+<span class="n">test_datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">validation_generator</span> <span class="o">=</span> <span class="n">test_datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span>
+			<span class="n">validation_dir</span><span class="p">,</span>
+    		<span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">),</span>
+			<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+			<span class="n">class_mode</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>
+			<span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><a class="post-dummy-target" id="imagedatagenerator-类"></a><h5>ImageDataGenerator 类</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">featurewise_center</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  
+                                             <span class="n">samplewise_center</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                             <span class="n">featurewise_std_normalization</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                             <span class="n">samplewise_std_normalization</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                             <span class="n">zca_whitening</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                             <span class="n">zca_epsilon</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">,</span> 
+                                             <span class="n">rotation_range</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                             <span class="n">width_shift_range</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">height_shift_range</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">brightness_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                                             <span class="n">shear_range</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">zoom_range</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">channel_shift_range</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">fill_mode</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> 
+                                             <span class="n">cval</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">horizontal_flip</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                             <span class="n">vertical_flip</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                             <span class="n">rescale</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                                             <span class="n">preprocessing_function</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                                             <span class="n">data_format</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                                             <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> 
+                                             <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<ul>
+<li>
+<p><strong>featurewise_center</strong>: 布尔值。将输入数据的均值设置为 0，逐特征进行。</p>
+</li>
+<li>
+<p><strong>samplewise_center</strong>: 布尔值。将每个样本的均值设置为 0。</p>
+</li>
+<li>
+<p><strong>featurewise_std_normalization</strong>: Boolean. 布尔值。将输入除以数据标准差，逐特征进行。</p>
+</li>
+<li>
+<p><strong>samplewise_std_normalization</strong>: 布尔值。将每个输入除以其标准差。</p>
+</li>
+<li>
+<p><strong>zca_epsilon</strong>: ZCA 白化的 epsilon 值，默认为 1e-6。</p>
+</li>
+<li>
+<p><strong>zca_whitening</strong>: 布尔值。是否应用 ZCA 白化。</p>
+</li>
+<li>
+<p><strong>rotation_range</strong>: 整数。随机旋转的度数范围。</p>
+</li>
+<li>
+<p>width_shift_range</p>
+</li>
+</ul>
+<p>: 浮点数、一维数组或整数</p>
+<ul>
+<li>
+<p>float: 如果 &lt;1，则是除以总宽度的值，或者如果 &gt;=1，则为像素值。</p>
+</li>
+<li>
+<p>1-D 数组: 数组中的随机元素。</p>
+</li>
+<li>
+<p>int: 来自间隔 <code>(-width_shift_range, +width_shift_range)</code> 之间的整数个像素。</p>
+</li>
+<li>
+<p><code>width_shift_range=2</code> 时，可能值是整数 <code>[-1, 0, +1]</code>，与 <code>width_shift_range=[-1, 0, +1]</code> 相同；而 <code>width_shift_range=1.0</code> 时，可能值是 <code>[-1.0, +1.0)</code> 之间的浮点数。</p>
+</li>
+<li>
+<p>height_shift_range</p>
+</li>
+</ul>
+<p>: 浮点数、一维数组或整数</p>
+<ul>
+<li>
+<p>float: 如果 &lt;1，则是除以总宽度的值，或者如果 &gt;=1，则为像素值。</p>
+</li>
+<li>
+<p>1-D array-like: 数组中的随机元素。</p>
+</li>
+<li>
+<p>int: 来自间隔 <code>(-height_shift_range, +height_shift_range)</code> 之间的整数个像素。</p>
+</li>
+<li>
+<p><code>height_shift_range=2</code> 时，可能值是整数 <code>[-1, 0, +1]</code>，与 <code>height_shift_range=[-1, 0, +1]</code> 相同；而 <code>height_shift_range=1.0</code> 时，可能值是 <code>[-1.0, +1.0)</code> 之间的浮点数。</p>
+</li>
+<li>
+<p><strong>shear_range</strong>: 浮点数。剪切强度（以弧度逆时针方向剪切角度）。</p>
+</li>
+<li>
+<p><strong>zoom_range</strong>: 浮点数 或 <code>[lower, upper]</code>。随机缩放范围。如果是浮点数，<code>[lower, upper] = [1-zoom_range, 1+zoom_range]</code>。</p>
+</li>
+<li>
+<p><strong>channel_shift_range</strong>: 浮点数。随机通道转换的范围。</p>
+</li>
+<li>
+<p>fill_mode</p>
+</li>
+</ul>
+<p>: {&ldquo;constant&rdquo;, &ldquo;nearest&rdquo;, &ldquo;reflect&rdquo; or &ldquo;wrap&rdquo;} 之一。默认为 &lsquo;nearest&rsquo;。输入边界以外的点根据给定的模式填充：</p>
+<ul>
+<li>
+<p>&lsquo;constant&rsquo;: kkkkkkkk|abcd|kkkkkkkk (cval=k)</p>
+</li>
+<li>
+<p>&lsquo;nearest&rsquo;: aaaaaaaa|abcd|dddddddd</p>
+</li>
+<li>
+<p>&lsquo;reflect&rsquo;: abcddcba|abcd|dcbaabcd</p>
+</li>
+<li>
+<p>&lsquo;wrap&rsquo;: abcdabcd|abcd|abcdabcd</p>
+</li>
+<li>
+<p><strong>cval</strong>: 浮点数或整数。用于边界之外的点的值，当 <code>fill_mode = &quot;constant&quot;</code> 时。</p>
+</li>
+<li>
+<p><strong>horizontal_flip</strong>: 布尔值。随机水平翻转。</p>
+</li>
+<li>
+<p><strong>vertical_flip</strong>: 布尔值。随机垂直翻转。</p>
+</li>
+<li>
+<p><strong>rescale</strong>: 重缩放因子。默认为 None。如果是 None 或 0，不进行缩放，否则将数据乘以所提供的值（在应用任何其他转换之前）。</p>
+</li>
+<li>
+<p><strong>preprocessing_function</strong>: 应用于每个输入的函数。这个函数会在任何其他改变之前运行。这个函数需要一个参数：一张图像（秩为 3 的 Numpy 张量），并且应该输出一个同尺寸的 Numpy 张量。</p>
+</li>
+<li>
+<p><strong>data_format</strong>: 图像数据格式，{&ldquo;channels_first&rdquo;, &ldquo;channels_last&rdquo;} 之一。&ldquo;channels_last&rdquo; 模式表示图像输入尺寸应该为 <code>(samples, height, width, channels)</code>，&ldquo;channels_first&rdquo; 模式表示输入尺寸应该为 <code>(samples, channels, height, width)</code>。默认为 在 Keras 配置文件 <code>~/.keras/keras.json</code> 中的 <code>image_data_format</code> 值。如果你从未设置它，那它就是 &ldquo;channels_last&rdquo;。</p>
+</li>
+<li>
+<p><strong>validation_split</strong>: 浮点数。Float. 保留用于验证的图像的比例（严格在0和1之间）。</p>
+</li>
+<li>
+<p><strong>dtype</strong>: 生成数组使用的数据类型。</p>
+</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="imagedatagenerator-类方法"></a><h5>ImageDataGenerator 类方法</h5>
+<a class="post-dummy-target" id="apply_transform"></a><h6>apply_transform</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">apply_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">transform_parameters</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>将数据生成器用于某些示例数据。</p>
+<p>它基于一组样本数据，计算与数据转换相关的内部数据统计。</p>
+<p>当且仅当 <code>featurewise_center</code> 或 <code>featurewise_std_normalization</code> 或 <code>zca_whitening</code> 设置为 True 时才需要。</p>
+<ul>
+<li>
+<p><strong>x</strong>: 3D 张量，单张图像。</p>
+</li>
+<li>
+<p>transform_parameters</p>
+</li>
+</ul>
+<p>: 字符串 - 参数 对表示的字典，用于描述转换。目前，使用字典中的以下参数：</p>
+<ul>
+<li>&lsquo;theta&rsquo;: 浮点数。旋转角度（度）。</li>
+<li>&lsquo;tx&rsquo;: 浮点数。在 x 方向上移动。</li>
+<li>&lsquo;ty&rsquo;: 浮点数。在 y 方向上移动。</li>
+<li>shear&rsquo;: 浮点数。剪切角度（度）。</li>
+<li>&lsquo;zx&rsquo;: 浮点数。放大 x 方向。</li>
+<li>&lsquo;zy&rsquo;: 浮点数。放大 y 方向。</li>
+<li>&lsquo;flip_horizontal&rsquo;: 布尔 值。水平翻转。</li>
+<li>&lsquo;flip_vertical&rsquo;: 布尔值。垂直翻转。</li>
+<li>&lsquo;channel_shift_intencity&rsquo;: 浮点数。频道转换强度。</li>
+<li>&lsquo;brightness&rsquo;: 浮点数。亮度转换强度。</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="fit"></a><h6>fit</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">augment</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">rounds</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>将数据生成器用于某些示例数据。</p>
+<p>它基于一组样本数据，计算与数据转换相关的内部数据统计。</p>
+<p>当且仅当 <code>featurewise_center</code> 或 <code>featurewise_std_normalization</code> 或 <code>zca_whitening</code> 设置为 True 时才需要。</p>
+<ul>
+<li><strong>x</strong>: 样本数据。秩应该为 4。对于灰度数据，通道轴的值应该为 1；对于 RGB 数据，值应该为 3。</li>
+<li><strong>augment</strong>: 布尔值（默认为 False）。是否使用随机样本扩张。</li>
+<li><strong>rounds</strong>: 整数（默认为 1）。如果数据数据增强（augment=True），表明在数据上进行多少次增强。</li>
+<li><strong>seed</strong>: 整数（默认 None）。随机种子。</li>
+</ul>
+</blockquote>
+<a class="post-dummy-target" id="flow"></a><h6>flow</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">flow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_to_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">save_format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>采集数据和标签数组，生成批量增强数据。</p>
+<p><strong>参数</strong></p>
+<ul>
+<li><strong>x</strong>: 输入数据。秩为 4 的 Numpy 矩阵或元组。如果是元组，第一个元素应该包含图像，第二个元素是另一个 Numpy 数组或一列 Numpy 数组，它们不经过任何修改就传递给输出。可用于将模型杂项数据与图像一起输入。对于灰度数据，图像数组的通道轴的值应该为 1，而对于 RGB 数据，其值应该为 3。</li>
+<li><strong>y</strong>: 标签。</li>
+<li><strong>batch_size</strong>: 整数 (默认为 32)。</li>
+<li><strong>shuffle</strong>: 布尔值 (默认为 True)。</li>
+<li><strong>sample_weight</strong>: 样本权重。</li>
+<li><strong>seed</strong>: 整数（默认为 None）。</li>
+<li><strong>save_to_dir</strong>: None 或 字符串（默认为 None）。这使您可以选择指定要保存的正在生成的增强图片的目录（用于可视化您正在执行的操作）。</li>
+<li><strong>save_prefix</strong>: 字符串（默认 <code>''</code>）。保存图片的文件名前缀（仅当 <code>save_to_dir</code> 设置时可用）。</li>
+<li><strong>save_format</strong>: &ldquo;png&rdquo;, &ldquo;jpeg&rdquo; 之一（仅当 <code>save_to_dir</code> 设置时可用）。默认：&ldquo;png&rdquo;。</li>
+<li><strong>subset</strong>: 数据子集 (&ldquo;training&rdquo; 或 &ldquo;validation&rdquo;)，如果 在 <code>ImageDataGenerator</code> 中设置了 <code>validation_split</code>。</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>一个生成元组 <code>(x, y)</code> 的 <code>Iterator</code>，其中 <code>x</code> 是图像数据的 Numpy 数组（在单张图像输入时），或 Numpy 数组列表（在额外多个输入时），<code>y</code> 是对应的标签的 Numpy 数组。如果 &lsquo;sample_weight&rsquo; 不是 None，生成的元组形式为 <code>(x, y, sample_weight)</code>。如果 <code>y</code> 是 None, 只有 Numpy 数组 <code>x</code> 被返回。</p>
+</blockquote>
+<a class="post-dummy-target" id="flow_from_dataframe"></a><h6>flow_from_dataframe</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">flow_from_dataframe</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">x_col</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="n">y_col</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="n">has_ext</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">color_mode</span><span class="o">=</span><span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">class_mode</span><span class="o">=</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_to_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">save_format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>输入 dataframe 和目录的路径，并生成批量的增强/标准化的数据。</p>
+<p>这里有一个简单的教程： <a href="http://bit.ly/keras_flow_from_dataframe">http://bit.ly/keras_flow_from_dataframe</a></p>
+<p><strong>参数</strong></p>
+<ul>
+<li>
+<p><strong>dataframe</strong>: Pandas dataframe，一列为图像的文件名，另一列为图像的类别， 或者是可以作为原始目标数据多个列。</p>
+</li>
+<li>
+<p><strong>directory</strong>: 字符串，目标目录的路径，其中包含在 dataframe 中映射的所有图像。</p>
+</li>
+<li>
+<p><strong>x_col</strong>: 字符串，dataframe 中包含目标图像文件夹的目录的列。</p>
+</li>
+<li>
+<p><strong>y_col</strong>: 字符串或字符串列表，dataframe 中将作为目标数据的列。</p>
+</li>
+<li>
+<p><strong>has_ext</strong>: 布尔值，如果 dataframe[x_col] 中的文件名具有扩展名则为 True，否则为 False。</p>
+</li>
+<li>
+<p><strong>target_size</strong>: 整数元组 <code>(height, width)</code>，默认为 <code>(256, 256)</code>。 所有找到的图都会调整到这个维度。</p>
+</li>
+<li>
+<p><strong>color_mode</strong>: &ldquo;grayscale&rdquo;, &ldquo;rbg&rdquo; 之一。默认：&ldquo;rgb&rdquo;。 图像是否转换为 1 个或 3 个颜色通道。</p>
+</li>
+<li>
+<p><strong>classes</strong>: 可选的类别列表 (例如， <code>['dogs', 'cats']</code>)。默认：None。 如未提供，类比列表将自动从 y_col 中推理出来，y_col 将会被映射为类别索引）。 包含从类名到类索引的映射的字典可以通过属性 <code>class_indices</code> 获得。</p>
+</li>
+<li>
+<p>class_mode</p>
+</li>
+</ul>
+<p>: &ldquo;categorical&rdquo;, &ldquo;binary&rdquo;, &ldquo;sparse&rdquo;, &ldquo;input&rdquo;, &ldquo;other&rdquo; or None 之一。 默认：&ldquo;categorical&rdquo;。决定返回标签数组的类型：</p>
+<ul>
+<li>
+<p><code>&quot;categorical&quot;</code> 将是 2D one-hot 编码标签，</p>
+</li>
+<li>
+<p><code>&quot;binary&quot;</code> 将是 1D 二进制标签，</p>
+</li>
+<li>
+<p><code>&quot;sparse&quot;</code> 将是 1D 整数标签，</p>
+</li>
+<li>
+<p><code>&quot;input&quot;</code> 将是与输入图像相同的图像（主要用于与自动编码器一起使用），</p>
+</li>
+<li>
+<p><code>&quot;other&quot;</code> 将是 y_col 数据的 numpy 数组，</p>
+</li>
+<li>
+<p>None, 不返回任何标签（生成器只会产生批量的图像数据，这对使用 <code>model.predict_generator()</code>, <code>model.evaluate_generator()</code> 等很有用）。</p>
+</li>
+<li>
+<p><strong>batch_size</strong>: 批量数据的尺寸（默认：32）。</p>
+</li>
+<li>
+<p><strong>shuffle</strong>: 是否混洗数据（默认：True）</p>
+</li>
+<li>
+<p><strong>seed</strong>: 可选的混洗和转换的随即种子。</p>
+</li>
+<li>
+<p><strong>save_to_dir</strong>: None 或 str (默认: None). 这允许你可选地指定要保存正在生成的增强图片的目录（用于可视化您正在执行的操作）。</p>
+</li>
+<li>
+<p><strong>save_prefix</strong>: 字符串。保存图片的文件名前缀（仅当 <code>save_to_dir</code> 设置时可用）。</p>
+</li>
+<li>
+<p><strong>save_format</strong>: &ldquo;png&rdquo;, &ldquo;jpeg&rdquo; 之一（仅当 <code>save_to_dir</code> 设置时可用）。默认：&ldquo;png&rdquo;。</p>
+</li>
+<li>
+<p><strong>follow_links</strong>: 是否跟随类子目录中的符号链接（默认：False）。</p>
+</li>
+<li>
+<p><strong>subset</strong>: 数据子集 (<code>&quot;training&quot;</code> 或 <code>&quot;validation&quot;</code>)，如果在 <code>ImageDataGenerator</code> 中设置了 <code>validation_split</code>。</p>
+</li>
+<li>
+<p><strong>interpolation</strong>: 在目标大小与加载图像的大小不同时，用于重新采样图像的插值方法。 支持的方法有 <code>&quot;nearest&quot;</code>, <code>&quot;bilinear&quot;</code>, and <code>&quot;bicubic&quot;</code>。 如果安装了 1.1.3 以上版本的 PIL 的话，同样支持 <code>&quot;lanczos&quot;</code>。 如果安装了 3.4.0 以上版本的 PIL 的话，同样支持 <code>&quot;box&quot;</code> 和 <code>&quot;hamming&quot;</code>。 默认情况下，使用 <code>&quot;nearest&quot;</code>。</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>一个生成 <code>(x, y)</code> 元组的 DataFrameIterator， 其中 <code>x</code> 是一个包含一批尺寸为 <code>(batch_size, *target_size, channels)</code> 的图像样本的 numpy 数组，<code>y</code> 是对应的标签的 numpy 数组。</p>
+</blockquote>
+<a class="post-dummy-target" id="flow_from_directory"></a><h6>flow_from_directory</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">flow_from_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">color_mode</span><span class="o">=</span><span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">class_mode</span><span class="o">=</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_to_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">save_format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">follow_links</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><strong>参数</strong></p>
+<ul>
+<li>
+<p><strong>directory</strong>: 目标目录的路径。每个类应该包含一个子目录。任何在子目录树下的 PNG, JPG, BMP, PPM 或 TIF 图像，都将被包含在生成器中。更多细节，详见 [此脚本](<a href="https://gist.github.com/fchollet/">https://gist.github.com/fchollet/</a>        0830affa1f7f19fd47b06d4cf89ed44d)。</p>
+</li>
+<li>
+<p><strong>target_size</strong>: 整数元组 <code>(height, width)</code>，默认：<code>(256, 256)</code>。所有的图像将被调整到的尺寸。</p>
+</li>
+<li>
+<p><strong>color_mode</strong>: &ldquo;grayscale&rdquo;, &ldquo;rbg&rdquo; 之一。默认：&ldquo;rgb&rdquo;。图像是否被转换成 1 或 3 个颜色通道。</p>
+</li>
+<li>
+<p><strong>classes</strong>: 可选的类的子目录列表（例如 <code>['dogs', 'cats']</code>）。默认：None。如果未提供，类的列表将自动从 <code>directory</code> 下的 子目录名称/结构 中推断出来，其中每个子目录都将被作为不同的类（类名将按字典序映射到标签的索引）。包含从类名到类索引的映射的字典可以通过 <code>class_indices</code> 属性获得。</p>
+</li>
+<li>
+<p>class_mode</p>
+</li>
+</ul>
+<p>: &ldquo;categorical&rdquo;, &ldquo;binary&rdquo;, &ldquo;sparse&rdquo;, &ldquo;input&rdquo; 或 None 之一。默认：&ldquo;categorical&rdquo;。决定返回的标签数组的类型：</p>
+<ul>
+<li>
+<p>&ldquo;categorical&rdquo; 将是 2D one-hot 编码标签，</p>
+</li>
+<li>
+<p>&ldquo;binary&rdquo; 将是 1D 二进制标签，&ldquo;sparse&rdquo; 将是 1D 整数标签，</p>
+</li>
+<li>
+<p>&ldquo;input&rdquo; 将是与输入图像相同的图像（主要用于自动编码器）。</p>
+</li>
+<li>
+<p>如果为 None，不返回标签（生成器将只产生批量的图像数据，对于 <code>model.predict_generator()</code>, <code>model.evaluate_generator()</code> 等很有用）。请注意，如果 <code>class_mode</code> 为 None，那么数据仍然需要驻留在 <code>directory</code> 的子目录中才能正常工作。</p>
+</li>
+<li>
+<p><strong>batch_size</strong>: 一批数据的大小（默认 32）。</p>
+</li>
+<li>
+<p><strong>shuffle</strong>: 是否混洗数据（默认 True）。</p>
+</li>
+<li>
+<p><strong>seed</strong>: 可选随机种子，用于混洗和转换。</p>
+</li>
+<li>
+<p><strong>save_to_dir</strong>: None 或 字符串（默认 None）。这使你可以最佳地指定正在生成的增强图片要保存的目录（用于可视化你在做什么）。</p>
+</li>
+<li>
+<p><strong>save_prefix</strong>: 字符串。 保存图片的文件名前缀（仅当 <code>save_to_dir</code> 设置时可用）。</p>
+</li>
+<li>
+<p><strong>save_format</strong>: &ldquo;png&rdquo;, &ldquo;jpeg&rdquo; 之一（仅当 <code>save_to_dir</code> 设置时可用）。默认：&ldquo;png&rdquo;。</p>
+</li>
+<li>
+<p><strong>follow_links</strong>: 是否跟踪类子目录中的符号链接（默认为 False）。</p>
+</li>
+<li>
+<p><strong>subset</strong>: 数据子集 (&ldquo;training&rdquo; 或 &ldquo;validation&rdquo;)，如果 在 <code>ImageDataGenerator</code> 中设置了 <code>validation_split</code>。</p>
+</li>
+<li>
+<p><strong>interpolation</strong>: 在目标大小与加载图像的大小不同时，用于重新采样图像的插值方法。 支持的方法有 <code>&quot;nearest&quot;</code>, <code>&quot;bilinear&quot;</code>, and <code>&quot;bicubic&quot;</code>。 如果安装了 1.1.3 以上版本的 PIL 的话，同样支持 <code>&quot;lanczos&quot;</code>。 如果安装了 3.4.0 以上版本的 PIL 的话，同样支持 <code>&quot;box&quot;</code> 和 <code>&quot;hamming&quot;</code>。 默认情况下，使用 <code>&quot;nearest&quot;</code>。</p>
+</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>一个生成 <code>(x, y)</code> 元组的 <code>DirectoryIterator</code>，其中 <code>x</code> 是一个包含一批尺寸为 <code>(batch_size, *target_size, channels)</code>的图像的 Numpy 数组，<code>y</code> 是对应标签的 Numpy 数组。</p>
+</blockquote>
+<a class="post-dummy-target" id="get_random_transform"></a><h6>get_random_transform</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">get_random_transform</span><span class="p">(</span><span class="n">img_shape</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>为转换生成随机参数。</p>
+<p><strong>参数</strong></p>
+<ul>
+<li><strong>seed</strong>: 随机种子</li>
+<li><strong>img_shape</strong>: 整数元组。被转换的图像的尺寸。</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>包含随机选择的描述变换的参数的字典。</p>
+</blockquote>
+<a class="post-dummy-target" id="random_transform"></a><h6>random_transform</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">random_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>将随机变换应用于图像。</p>
+<p><strong>参数</strong></p>
+<ul>
+<li><strong>x</strong>: 3D 张量，单张图像。</li>
+<li><strong>seed</strong>: 随机种子。</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>输入的随机转换版本（相同形状）。</p>
+</blockquote>
+<a class="post-dummy-target" id="standardize"></a><h6>standardize</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">standardize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>将标准化配置应用于一批输入。</p>
+<p><strong>参数</strong></p>
+<ul>
+<li><strong>x</strong>: 需要标准化的一批输入。</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>标准化后的输入。</p>
+</blockquote>
+</div>
+    </div></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Xingyu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+    </div>
+</footer></div><a href="#" class="dynamic-to-top" id="dynamic-to-top" data-scroll>
+            <span>&nbsp;</span>
+        </a><script src="/js/lib/jquery/jquery.slim.min.js"></script><script src="/js/lib/lazysizes/lazysizes.min.js"></script><script src="/js/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script>window.scroll = new SmoothScroll('[data-scroll]', {speed: 300, speedAsDuration: true});</script><link rel="stylesheet" href="/css/lib/katex/katex.min.css"><script src="/js/lib/katex/katex.min.js"></script><script defer src="/js/lib/katex/auto-render.min.js"></script><link rel="stylesheet" href="/css/lib/katex/copy-tex.min.css"><script defer src="/js/lib/katex/copy-tex.min.js"></script><script defer src="/js/lib/katex/mhchem.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },{ left: "$", right: "$", display: false },]
+            });
+        });
+    </script><script src="/js/blog.min.js"></script></body>
+</html>
