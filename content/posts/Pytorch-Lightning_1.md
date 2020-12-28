@@ -20,14 +20,16 @@ featured_image_preview: ""
 comment: true
 toc: true
 auto_collapse_toc: true
-math: false
+math: true
 ---
 
-<!--more-->
+
 
 >发现了一个神器，减少代码量，界面优美。 Pytorch + Kears
 >
 >于是乎，开撸   
+
+<!--more-->
 
 # Pytorch Lightning 
 
