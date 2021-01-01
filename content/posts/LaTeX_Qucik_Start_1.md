@@ -1,7 +1,7 @@
 ---
 author: "xingyu"
 author_link: ""
-title: "Latex Learning"
+title: "LaTeX Learning"
 date: 2020-12-30T10:20:16+08:00
 lastmod: 2020-12-30T10:20:16+08:00
 draft: false
@@ -22,7 +22,7 @@ auto_collapse_toc: true
 math: false
 ---
 
->一直都想要学Latex，最近恰逢模式识别大作业，而且为数学建模做准备，把这个顺手学一学。
+>一直都想要学LaTeX，最近恰逢模式识别大作业，而且为数学建模做准备，把这个顺手学一学。
 
 <!--more-->
 
