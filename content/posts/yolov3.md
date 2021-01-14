@@ -34,6 +34,8 @@ math: true
 
 ![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210111174132.png)
 
+**注： 对于 Pytorch， 通道数在 batch_size 后面。**
+
 左边部分：
 
 主干特诊提取网络 Darknet-53：
@@ -170,3 +172,4 @@ def darknet53(pretrained, **kwargs):
 
 
 
+p
