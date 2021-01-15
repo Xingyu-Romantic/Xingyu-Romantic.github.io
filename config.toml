@@ -344,3 +344,5 @@ dateFormatToUse = "2020-01-01"
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
   taxonomyTerm = ["HTML"]
+[blackfriday]
+  extensions = ["hardLineBreak"]
