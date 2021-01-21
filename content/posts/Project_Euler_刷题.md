@@ -4,7 +4,7 @@ author_link: ""
 title: "Project_Euler_刷题"
 date: 2021-01-19T23:41:39+08:00
 lastmod: 2021-01-19T23:41:39+08:00
-draft: true
+draft: false
 description: ""
 show_in_homepage: true
 description_as_summary: false
@@ -162,5 +162,198 @@ What is the value of the first triangle number to have over five hundred divisor
 
 ### 代码
 
+自己写的暴力太拉跨了，贼慢。这里放上百(谷)度(歌)到的代码
 
+```python
+from math import sqrt 
+import time 
+def natSum(n):
+    x = 1
+    count = 0
+    sum = 0
+    while count <= n:
+        sum += x
+        count = 0
+        for i in range(1,int(sqrt(sum))+1):
+            if sum % i == 0:
+                count += 2
+        if sqrt(sum)==int(sqrt(sum)): 
+                count -= 1
+        print(x,sum,count,n)
+
+        x += 1
+    
+natSum(500)
+```
+
+## [Large sum](https://projecteuler.net/problem=13)
+
+### 题目描述
+
+Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+
+100个50位的数字，太长就不放了
+
+###　题解
+
+```python
+with open('50位.txt') as f:
+    nums = f.readlines()
+
+nums = [int(i) for i in nums]
+
+result = 0
+for i in nums:
+    result += i
+print(str(result)[:10])
+```
+
+## [Longest Collatz sequence](https://projecteuler.net/problem=14)
+
+### 题目描述
+
+The following iterative sequence is defined for the set of positive integers:
+
+n → n/2 (n is even)
+n → 3n + 1 (n is odd)
+
+Using the rule above and starting with 13, we generate the following sequence:
+
+13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+
+It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+
+Which starting number, under one million, produces the longest chain?
+
+**NOTE:** Once the chain starts the terms are allowed to go above one million.
+
+### 题解
+
+#### １.暴力
+
+```python
+import time
+def iterative(n):
+    if n % 2 == 0:
+        return n / 2
+    else:
+        return 3 * n + 1
+
+
+def produce(start):
+    collatz = [start]
+    #length = 1
+    while collatz[-1] != 1:
+        collatz.append(iterative(collatz[-1]))
+        #length += 1
+        #del collatz[0]
+    return len(collatz)
+
+max = 0
+k = 0
+for i in range(2, 100 * 10000):
+    d = produce(i)
+    if d > max: 
+        max = d
+        k = i
+    if i % 1000: print(i)
+print(k, max)
+```
+
+#### 2. 放入字典，重复不再计算
+
+比上面的快了100倍
+
+```python
+length = dict()
+length[1] = 1
+def iterative(k):
+    if k in length:
+        return length[k]
+    if k == 1:
+        return 1
+    if k % 2 == 0:
+        if k / 2 in length:
+            return 1 + length[k/2]
+        length[k/2] = 1 + iterative(k / 2)
+        return length[k/2]
+    else:
+        if 3 * k + 1 in length:
+            return 1 + length[3 * k + 1]
+        return 1 + iterative(3 * k + 1)
+
+print(iterative(13))
+max = 0
+result = 0
+for i in range(1, 100 * 10000):
+    temp = iterative(i)
+    if temp > max:
+        max = temp
+        result = i
+        print(i)
+print(result, max)
+```
+
+## [Lattice paths](https://projecteuler.net/problem=15)
+
+### 题目描述
+
+Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner.
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210121131450.png)
+
+How many such routes are there through a 20×20 grid?
+
+###　题解
+
+是一道最最基础的动态规划，所以我能做出来。。
+
+```python
+N = 22
+dp = [[0 for i in range(N)] for j in range(N)]
+
+for i in range(N):
+    dp[0][i] = 1
+    dp[i][0] = 1
+
+for i in range(N):
+    for j in range(N):
+        if i!=0 and j!=0:
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+
+print(dp[20][20])
+```
+
+##　[Power digit sum](https://projecteuler.net/problem=16)
+
+###　题目描述
+
+$2^{15} =32768$  and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number $2^{1000}$?
+
+### 题解
+
+```python
+sum = 0
+for i in str(2**1000):
+    sum += int(i)
+print(sum)
+```
+
+## [Number letter counts](https://projecteuler.net/problem=17)
+
+### 题目描述
+
+If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
+
+If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
+
+
+
+**NOTE:** Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
+
+### 题解
+
+one t
 
