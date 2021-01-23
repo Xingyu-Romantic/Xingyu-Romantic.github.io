@@ -1,7 +1,7 @@
 ---
 author: "xingyu"
 author_link: ""
-title: "Project_Euler_刷题"
+title: "Project_Euler_刷题 10 ～ 20"
 date: 2021-01-19T23:41:39+08:00
 lastmod: 2021-01-19T23:41:39+08:00
 draft: false
@@ -26,7 +26,7 @@ math: true
 
 前面的没想着要写笔记，就没有存下代码，故从Problem11来记录代码
 
-全由Python实现。
+全由Python实现。 10～20题
 
 <!--more-->
 
@@ -356,4 +356,109 @@ If all the numbers from 1 to 1000 (one thousand) inclusive were written out in w
 ### 题解
 
 one t
+
+## [Maximum path sum I](https://projecteuler.net/problem=18)
+
+### 题目描述
+
+By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210121193438.png)
+
+That is, 3 + 7 + 4 + 9 = 23.
+
+Find the maximum total from top to bottom of the triangle below:
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210121193424.png)
+
+**NOTE:** As there are only 16384 routes, it is possible to solve this problem by trying every route. However, [Problem 67](https://projecteuler.net/problem=67), is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
+
+### 题解
+
+dfs，从下往上，逐步减小，
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210122110035.png)
+
+```python
+
+with open('triangle.txt') as f:
+    triangle = f.readlines()
+
+N = 100
+curr = []
+next = []
+F = [[0 for i in range(N)] for i in range(N)]
+for i in range(len(triangle)):
+    curr.append(triangle[i].strip('\n').split(' '))
+def dfs(i, k):
+    if i == len(triangle) - 1:
+        return  int(curr[i][k])
+    if F[i][k] != 0: return F[i][k]
+    F[i][k] = max(dfs(i+1, k), dfs(i+1, k+1)) + int(curr[i][k])
+    return F[i][k]
+
+print(dfs(0,0))
+```
+
+## [Counting Sundays](https://projecteuler.net/problem=19)
+
+### 题目描述
+
+You are given the following information, but you may prefer to do some research for yourself.
+
+- 1 Jan 1900 was a Monday.
+- Thirty days has September,
+  April, June and November.
+  All the rest have thirty-one,
+  Saving February alone,
+  Which has twenty-eight, rain or shine.
+  And on leap years, twenty-nine.
+- A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+
+How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+
+### 题解
+
+对datetime的使用， 很不错的库
+
+```python
+import datetime
+
+start = datetime.date(1901, 1, 1)
+end = datetime.date(2000, 12, 31)
+
+
+
+result = 0
+while start < end:
+    if start.strftime("%d") == '01' and  start.isoweekday() == 7:
+        result+=1
+    start = start + datetime.timedelta(days=1)
+    print(start, start.strftime("%d"))
+print(result)
+
+```
+
+## [Factorial digit sum](https://projecteuler.net/problem=20)
+
+###　题目描述
+
+*n*! means *n* × (*n* − 1) × ... × 3 × 2 × 1
+
+For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,
+and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+Find the sum of the digits in the number 100!
+
+### 题解
+
+```python
+import math
+sum = 0 
+k = math.factorial(100)
+for i in range(len(str(k))):
+    sum += int(str(k)[i])
+
+print(sum)
+```
 
