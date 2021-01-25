@@ -11,7 +11,7 @@ description_as_summary: false
 license: ""
 
 tags: ["Algorithm"]
-categories: ["Algortihm"]
+categories: ["Algorithm"]
 
 featured_image: ""
 featured_image_preview: ""
