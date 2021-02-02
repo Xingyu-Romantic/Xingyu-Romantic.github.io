@@ -1,10 +1,10 @@
 ---
 author: "xingyu"
 author_link: ""
-title: "Pytorch搭建Yolov3目标检测平台"
+title: "概述yolo各个版本"
 date: 2021-01-11T17:37:30+08:00
 lastmod: 2021-01-11T17:37:30+08:00
-draft: false
+draft: true
 description: ""
 show_in_homepage: true
 description_as_summary: false
@@ -26,7 +26,19 @@ math: true
 
 <!--more-->
 
-# yolov3 实现
+## yolov1
+
+
+
+
+
+
+
+
+
+
+
+## yolov3 实现
 
 ## 预测部分
 
