@@ -266,4 +266,160 @@ for i in range(100 * 10000):
 print(ans)
 ```
 
-## 
+## [Truncatable primes](https://projecteuler.net/problem=37)
+
+### 题目描述
+
+The number 3797 has an interesting property. Being prime itself, it is possible to continuously remove digits from left to right, and remain prime at each stage: 3797, 797, 97, and 7. Similarly we can work from right to left: 3797, 379, 37, and 3.
+
+Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
+
+NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+
+### 题解
+
+```python
+import math
+def isprime(nums):
+    if nums == 1:
+        return False
+    for i in range(2, int(math.sqrt(nums)) + 1):
+        if nums % i == 0:
+            return False
+    return True
+
+def jieduan(nums):
+    result = set()
+    for i in range(len(str(nums))):
+        try:
+            result.add(int(str(nums)[i:]))
+            result.add(int(str(nums)[:-1 * i - 1]))
+        except:
+            pass
+    return result
+
+ans = 0
+idx = 0
+for i in range(10, 1000000):
+    for j in jieduan(i):
+        if not isprime(j):
+            break
+    else:
+        ans += i
+        idx += 1
+    
+print(ans, idx)
+```
+
+## [Pandigital multiples](https://projecteuler.net/problem=38)
+
+### 题目描述
+
+Take the number 192 and multiply it by each of 1, 2, and 3:
+
+> 192 × 1 = 192
+> 192 × 2 = 384
+> 192 × 3 = 576
+
+By concatenating each product we get the 1 to 9 pandigital, 192384576. We will call 192384576 the concatenated product of 192 and (1,2,3)
+
+The same can be achieved by starting with 9 and multiplying by 1, 2, 3, 4, and 5, giving the pandigital, 918273645, which is the concatenated product of 9 and (1,2,3,4,5).
+
+What is the largest 1 to 9 pandigital 9-digit number that can be formed as the concatenated product of an integer with (1,2, ... , n) where n > 1?
+
+### 题解
+
+1. 不能有重复数字
+2. 不能有0
+3. 长度等于9
+
+```python
+def pandigital(num):
+    result = ''
+    for i in range(1, 10):
+        tmp = str(num * i)
+        for i in tmp:
+            if i in result:
+                return 0
+        if len(set(tmp)) != len(tmp):
+            break
+        if '0' in tmp:
+            break
+        result += tmp
+        if len(result) == 9:
+            return int(result)
+    return 0
+max = 0
+idx = 0
+for i in range(10001):
+    tmp = pandigital(i)
+    if tmp > max:
+        max = tmp
+        idx = i
+        print(max, idx)
+print(max, idx)
+```
+
+## [Integer right triangles](https://projecteuler.net/problem=39)
+
+### 题目描述
+
+If *p* is the perimeter of a right angle triangle with integral length sides, {*a*,*b*,*c*}, there are exactly three solutions for *p* = 120.
+
+{20,48,52}, {24,45,51}, {30,40,50}
+
+For which value of *p* ≤ 1000, is the number of solutions maximised?
+
+### 题解
+
+暴力
+
+```python
+def sovle(p):
+    ans = 0
+    for a in range(p//2):
+        for b in range(a, p//2):
+            if a**2 + b**2 == (p-a-b)**2:
+                ans += 1
+    return ans
+max = 0
+idx = 0 
+for i in range(1000):
+    tmp = sovle(i)
+    if tmp > max:
+        max = tmp
+        idx = i
+        print(max, i)
+print(max)
+```
+
+## [Champernowne's constant](https://projecteuler.net/problem=40)
+
+### 题目描述
+
+An irrational decimal fraction is created by concatenating the positive integers:
+
+0.12345678910**1**112131415161718192021...
+
+It can be seen that the $12^{th}$ digit of the fractional part is 1.
+
+If $d_n$ represents the $n^{th}$ digit of the fractional part, find the value of the following expression.
+
+$d_1 \times d_{10} \times d_{100} \times d_{1000} \times d_{10000} \times d_{100000} \times d_{1000000}$
+
+### 题解
+
+```python
+ans = ''
+i = 0
+while len(ans) < 1000001:
+    ans += str(i)
+    i += 1
+j = 1
+result = 1
+while j < 1000001:
+    result *= int(ans[j])
+    j *= 10
+print(result)
+```
+
