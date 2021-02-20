@@ -44,6 +44,12 @@ Baseline讲解：https://mp.weixin.qq.com/s/-GpT6IBAYPMEUHmULis3rA
 
 yolov5 官方教程：https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data
 
+**基础 baseline   epochs = 70  batchsize=2 **  应该调整imgsize的 :)
+
+![image-20210220125543509](/home/xingyu/.config/Typora/typora-user-images/image-20210220125543509.png)
+
+
+
 ## 赛题
 
 ###　数据介绍
