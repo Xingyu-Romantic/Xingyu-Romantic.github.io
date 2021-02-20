@@ -111,7 +111,6 @@ RUN pip install matplotlib
 RUN pip install scipy
 RUN pip install tensorboard
 RUN apt update && apt install -y libgl1-mesa-glx && apt-get install -y libglib2.0-0
-RUN mkdir t
 ## 镜像启动后统一执行 sh run.sh
 CMD ["sh", "run.sh"]
 ```
