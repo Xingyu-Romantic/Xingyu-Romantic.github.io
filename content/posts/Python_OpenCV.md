@@ -260,5 +260,70 @@ plt.imshow(img)   # rgb
 plt.show()
 ```
 
+### Color Channels
 
+```python
+blank = np.zeros(img.shape[:2], dtype='uint8')
+
+# Split Channels
+b, g, r = cv2.split(img)
+
+blue = cv2.merge([b, blank, blank])
+green = cv2.merge([blank, g, blank])
+red = cv2.merge([blank, blank, r])
+
+cv2.imshow('Blue', blue)
+cv2.imshow('Green', green)
+cv2.imshow('Red', red)
+'''
+cv2.imshow('Blue', b)
+cv2.imshow('Greed', g)
+cv2.imshow('Red', r)
+'''
+print(img.shape)
+print(b.shape)
+print(g.shape)
+print(r.shape)
+# Merge
+merged =cv2.merge([b,g,r])
+cv2.imshow('Merged', merged)
+```
+
+### Blurring Techniques 平滑、模糊 
+
+**kernel or window** : 
+
+* size : called kernel size
+* ...
+
+**sigmoid**：对其他块的影响力
+
+```python
+# Average Blur
+average = cv2.blur(img, (3, 3))
+cv2.imshow('Average Blur', average)
+
+# Gaussian Blur
+gauss =cv2.GaussianBlur(img, (3,3), 0)
+cv2.imshow('Gaussian Blur', gauss)
+
+# Median BLur
+median = cv2.medianBlur(img, 3)
+cv2.imshow('Median Blur', median)
+
+# Bilateral  应用模糊， 但会保留图像中的边缘
+bilateral = cv2.bilateralFilter(img, 10, 35, 35)
+cv2.imshow('Bilateral', bilateral)
+
+```
+
+### Bitwise_Operations 按位运算
+
+
+
+
+
+
+
+ 
 
