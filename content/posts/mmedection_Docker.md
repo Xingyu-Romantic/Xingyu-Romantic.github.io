@@ -156,6 +156,10 @@ docker run --gpus all \
 -it e6732164f22d /bin/bash
 ```
 
+结果惨不忍睹，，不知道哪里出问题了。。。
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210225104517.png)
+
 ## 网络配置
 
 ```python
