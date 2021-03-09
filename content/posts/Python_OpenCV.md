@@ -319,6 +319,49 @@ cv2.imshow('Bilateral', bilateral)
 
 ### Bitwise_Operations 按位运算
 
+```python
+blank = np.zeros((400, 400), dtype='uint8')
+
+rectangle = cv2.rectangle(blank.copy(), (30, 30), (370, 370), 255, -1)
+circle = cv2.circle(blank.copy(), (200, 200), 200, 255, -1)
+
+cv2.imshow('Rectangle', rectangle)
+cv2.imshow('Circle', circle)
+
+# bitwise AND --> itersecting regions
+bitwise_and = cv2.bitwise_and(rectangle, circle)
+cv2.imshow('Bitwise AND', bitwise_and)
+
+# bitwise OR  --> non-intersecting and intersecting regions
+bitwise_or = cv2.bitwise_or(rectangle, circle)
+cv2.imshow('Bitwise OR', bitwise_or)
+
+# bitwise XOR  --> non-intersecting regions
+bitwise_xor = cv2.bitwise_xor(rectangle, circle)
+cv2.imshow('Bitwise XOR', bitwise_xor)
+
+# bitwise NOT
+bitwise_not = cv2.bitwise_not(rectangle)
+cv2.imshow('Bitwise NOT', bitwise_not)
+```
+
+### Masking
+
+```python
+blank = np.zeros(img.shape[:2], dtype='uint8')
+#cv2.imshow('Blank', blank)
+
+circle = cv2.circle(blank.copy(), (img.shape[1]//2 - 135, img.shape[0]//2 - 200), 100, 255, -1)
+#cv2.imshow('Circle', mask)
+rectangle = cv2.rectangle(blank.copy(), (30, 30), (370, 370), 255, -1)
+weird_shape =cv2.bitwise_and(circle, rectangle)
+
+masked = cv2.bitwise_and(img, img, mask=weird_shape)
+cv2.imshow('Masked Image', masked)
+```
+
+### Computing Histograms
+
 
 
 
