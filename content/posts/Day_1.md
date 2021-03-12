@@ -10,8 +10,8 @@ show_in_homepage: true
 description_as_summary: false
 license: ""
 
-tags: ["每日总结"]
-categories: ["每日总结"]
+tags: ["每周总结"]
+categories: ["每周总结"]
 
 featured_image: ""
 featured_image_preview: ""
@@ -24,9 +24,11 @@ math: true
 
 Day 1 
 
+每周总结
+
 <!--more-->
 
-## 今日 3.12
+##  3.12
 
 **Leetcode ：**
 
@@ -46,7 +48,23 @@ Day 1
 
 * 数据标注 （80张）
 
-## 明天 3.13
+##  3.13
 
+**比赛：**
 
+* 数据标注 （40张）
+
+**LeetCode:**
+
+* 每日一题  
+
+**李宏毅机器学习：**
+
+* P5
+* HW1模型调整， 实现n-fold coress-val 。
+
+**English:**
+
+* 每日单词
+* 可可英语听力
 
