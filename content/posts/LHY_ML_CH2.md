@@ -28,7 +28,9 @@ math: true
 
 ## 首先查看Loss
 
-###　train_loss 不够低
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210312222314.png)
+
+###　Training data Loss
 
 **Model Bias**
 
@@ -66,3 +68,21 @@ self.net = nn.Sequential(
 # 500 epochs   128 batchsize    Loss : 0.98左右
 ```
 
+### Testing data Loss
+
+**Overfitting：** traning data loss 足够小，  testing data loss  大
+
+更有弹性的module更可能会overfitting
+
+解决： 
+
+* More training data
+
+* 限制module  Less parameters, sharing parameters  例如  CNN  Fully-connected
+* Early stopping
+* **Regularization**
+* Dropout
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210312223824.png)
+
+**mismatch**
