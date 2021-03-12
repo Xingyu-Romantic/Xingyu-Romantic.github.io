@@ -1,7 +1,7 @@
 ---
 author: "xingyu"
 author_link: ""
-title: "Day_1"
+title: "Week_1"
 date: 2021-03-12T21:55:29+08:00
 lastmod: 2021-03-12T21:55:29+08:00
 draft: false
