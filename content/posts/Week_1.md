@@ -56,15 +56,60 @@ Day 1
 
 **LeetCode:**
 
-* 每日一题  
+* 每日一题   [705. 设计哈希集合](https://leetcode-cn.com/problems/design-hashset/)   知识点：双向链表、 散列表、拉链法。
+* [1716. 计算力扣银行的钱](https://leetcode-cn.com/problems/calculate-money-in-leetcode-bank/)   知识点： 贪心、 数学
+* 
 
 **李宏毅机器学习：**
 
-* P5
+* P5  前半
 * HW1模型调整， 实现n-fold coress-val 。
 
 **English:**
 
-* 每日单词
+* 每日单词 
 * 可可英语听力
+
+**其他：**
+
+* slam 初步认识    
+  * 单目相机、RGB-D 相机。
+  * semi-dense、spevse、 dense
+  * 定位与建图；AR、手持定位、自动驾驶定位
+* Dw 集成学习
+  * 组队成功，担任队长。
+
+## 3.14
+
+**比赛：**
+
+* 数据标注（40张）
+
+**LeetCode:**
+
+* 每日一题 [706. 设计哈希映射](https://leetcode-cn.com/problems/design-hashmap/)    知识点：拉链法、对哈希表的理解
+* 周赛    前两道题秒杀、后两道题似懂非懂。  等复现。
+* 复现 周赛第三题      [5703. 最大平均通过率](https://leetcode-cn.com/problems/maximum-average-pass-ratio/)      [题解](https://leetcode-cn.com/problems/maximum-average-pass-ratio/solution/python-dfsbu-xing-da-ding-dui-niu-bi-by-6gubx/)   知识点：堆排序、贪心。维护一个大顶堆即可。记住`heapq`这个库。 
+* 复现  周赛第四题    [5704. 好子数组的最大分数](https://leetcode-cn.com/problems/maximum-score-of-a-good-subarray/)   知识点：双指针，贪心，以k为中心点向两边扩展。
+
+**李宏毅机器学习：**
+
+* P5 后半
+
+**English：**
+
+* 每日打卡
+
+**其他：**
+
+* 《矩阵论》作业
+* 《数据库》 作业
+
+
+
+
+
+
+
+
 

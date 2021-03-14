@@ -86,3 +86,51 @@ self.net = nn.Sequential(
 ![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210312223824.png)
 
 **mismatch**
+
+### P5  类神经网络训练不起来怎么办？
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210313231910.png)
+
+Optimization Fails becase 
+
+* local minima
+* saddle point 
+
+gradient不下降，卡在critical point 
+
+**判断 critical point  到底是 local minima  or saddle point**
+
+**Taler Series Approximation**
+$$
+L(\theta) \approx L(\theta') + (\theta - \theta')^T g + \frac 12(\theta-\theta')^TH(\theta-\theta')
+$$
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210313234134.png)
+
+>Gradient **g** is a **vector**   图中 绿色
+>
+>$g = \nabla L(\theta')$          $g_i = \frac {\partial L(\theta')}{\partial \theta_i}$
+>
+>Hessian **H**  is a **matrix**  图中 红色
+>
+>$H_{ij} = \frac {\part^2}{\part \theta_i\part\theta_j}L(\theta')$
+
+
+
+$ (\theta - \theta')^T g + \frac 12(\theta-\theta')^TH(\theta-\theta') =  v^THv$
+
+**For  all v**
+
+$v^THv> 0$ == > Around $\theta':L(\theta) > L(\theta') $    ==> Local minima
+
+**For all v**
+
+$v^THv < 0$ == > Around $\theta':L(\theta) < L(\theta') $    ==> Local maxima
+
+Sometimes $v^THv>0$,  Sometimes $v^THv<0$   ==> Saddle point
+
+**H may tell  us parameter update direction !**
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210314091003.png)
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210314092020.png)
+
