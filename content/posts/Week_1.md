@@ -91,6 +91,7 @@ Day 1
 * 周赛    前两道题秒杀、后两道题似懂非懂。  等复现。
 * 复现 周赛第三题      [5703. 最大平均通过率](https://leetcode-cn.com/problems/maximum-average-pass-ratio/)      [题解](https://leetcode-cn.com/problems/maximum-average-pass-ratio/solution/python-dfsbu-xing-da-ding-dui-niu-bi-by-6gubx/)   知识点：堆排序、贪心。维护一个大顶堆即可。记住`heapq`这个库。 
 * 复现  周赛第四题    [5704. 好子数组的最大分数](https://leetcode-cn.com/problems/maximum-score-of-a-good-subarray/)   知识点：双指针，贪心，以k为中心点向两边扩展。
+*  [84. 柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/)    知识点： 单调栈，周赛第四题也可用单调栈。近期需要做一些单调栈相关题目。
 
 **李宏毅机器学习：**
 
