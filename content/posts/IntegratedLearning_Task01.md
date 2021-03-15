@@ -47,7 +47,7 @@ iris = datasets.load_iris()  # iris 数据集
 
 关于 seaborn、matplotlib绘图详见 [动手数据分析](https://www.involute.top/2020/08/hands-on-data-analysis/)
 
-关于使用sklearn生成数据集，详见 本节 **1.3 无监督学习** 内容
+关于使用sklearn生成数据集，详见 本节 [**1.3 无监督学习**](#13-无监督学习) 内容
 
 ## 1.1 回归
 
