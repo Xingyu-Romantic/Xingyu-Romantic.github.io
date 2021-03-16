@@ -135,6 +135,14 @@ Day 1
 
 * 每日一题 [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/)    知识点：模拟    昨天基本一毛一样，复习昨天解法。
 
+**English:**
+
+* 每日单词
+
+**集成学习：**
+
+* Task02， 三种方法推导 回归模型  **LSE**、**MSE**、**几何**视角。
+
 
 
 
