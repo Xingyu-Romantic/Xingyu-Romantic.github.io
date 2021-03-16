@@ -121,6 +121,28 @@ Day 1
 
 * 完成Task01、并记录笔记。
 
+**English:**
+
+* 每日单词
+
+**其他：**
+
+* 《最优化理论》作业     路漫漫。 
+
+## 3.16
+
+**LeetCode：**
+
+* 每日一题 [59. 螺旋矩阵 II](https://leetcode-cn.com/problems/spiral-matrix-ii/)    知识点：模拟    昨天基本一毛一样，复习昨天解法。
+
+
+
+
+
+
+
+
+
 
 
 
