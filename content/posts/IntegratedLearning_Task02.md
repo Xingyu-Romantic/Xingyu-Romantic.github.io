@@ -133,7 +133,7 @@ boston_data.head()
 
 (a) 最小二乘估计：
 $$
-L(w) = \sum\limits_{i=1}^{N}||w^Tx_i - y_i||^2 = \sum\limits_{i=1}^{N}(w^Tx_i-y_i)^2 =(w^TX^T-Y^T)(w^TX^T-Y^T)^T \\ 
+L(w) = \sum \limits _{i=1}^{N}||w^Tx_i - y_i||^2 = \sum \limits _{i=1}^{N}(w^Tx_i-y_i)^2 =(w^TX^T-Y^T)(w^TX^T-Y^T)^T \\
 = w^TX^TXw - w^TX^TY - Y^TXw + Y^TY \\
 采用公式： \\
 (AB)^T = B^TA^T \\
@@ -174,7 +174,7 @@ $y|x_iw ～N(w^Tx, \varepsilon^2)$
 MLE (极大似然估计):
 
 $$
-L(w) = lnP(Y|x_iw) = ln\prod\limits_{i=1}^{N}P(y_i|x_iw)=\sum\limits_{i=1}^NlnP(y_i|x_iw)\\
+L(w) = lnP(Y|x_iw) = ln\prod \limits _{i=1}^{N}P(y_i|x_iw)=\sum\limits_{i=1}^NlnP(y_i|x_iw)\\
 =\sum\limits_{i=1}^N ln \frac{1}{\sqrt{2\pi}\sigma} + \frac {1}{2\sigma^2}(y_i-w^Tx_i)^2
 $$
 
