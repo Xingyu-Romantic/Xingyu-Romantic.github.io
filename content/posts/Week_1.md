@@ -147,7 +147,29 @@ Day 1
 
 * 把模型跑通， 接下来找个空闲时间多跑epoch 然后调参即可。
 
+## 3.17
 
+**LeetCode:**
+
+* 每日一题  [115. 不同的子序列](https://leetcode-cn.com/problems/distinct-subsequences/)   知识点： 动态规划。
+
+**English:**
+
+* 每日单词
+
+**本创项目：**
+
+* 熟悉UE4，分析适用到项目中的可行性。
+
+## 3.18
+
+**LeetCode:**
+
+* 每日一题 [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)   知识点：链表操作。
+
+**English:**
+
+* 每日单词
 
 
 
