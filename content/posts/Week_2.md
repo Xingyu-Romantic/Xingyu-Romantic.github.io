@@ -40,5 +40,14 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 
 **English:**
 
+* 每日单词
+
+**项目:**
+
+* 安排项目成员学习任务
+* 跑了60+epochs
+
+
+
 
 
