@@ -76,6 +76,29 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 
 * 《多元统计分析》B站 宝藏课程 P1 - P7
 
+## 3.22
+
+**LeetCoe:**
+
+* 每日打卡 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)  知识点： 位运算、 内置库的使用、Java源代码
+
+**Englihs:**
+
+* 每日单词
+
+**课程：**
+
+* 《数据库》作业
+* 《多元统计分析》作业
+
+课程内容属实难。。。， 这作业。
+
+**课外：**
+
+* 集成学习Task03 赶着打卡，没有怎么深入学习，明天抽空深入了解
+
+
+
 
 
 
