@@ -47,6 +47,35 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 * 安排项目成员学习任务
 * 跑了60+epochs
 
+## 3.20
+
+**LeetCode:**
+
+* 每日打卡 [150. 逆波兰表达式求值](https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/)     知识点: 模拟
+
+**English:**
+
+* 每日单词
+
+**竞赛：**
+
+* 实现对Yolov5 + deepSORT 的魔改,可以显示路径
+* 阅读上述项目代码 (5%)
+
+## 3.21
+
+**LeetCode:**
+
+* 每日打卡 [73. 矩阵置零](https://leetcode-cn.com/problems/set-matrix-zeroes/)  知识点: 模拟
+
+**English:**
+
+* 每日单词
+
+**课程:**
+
+* 《多元统计分析》B站 宝藏课程 P1 - P7
+
 
 
 
