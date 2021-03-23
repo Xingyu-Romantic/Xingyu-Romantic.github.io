@@ -80,11 +80,11 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 
 ## 3.22
 
-**LeetCoe:**
+**LeetCode:**
 
 * 每日打卡 [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)  知识点： 位运算、 内置库的使用、Java源代码
 
-**Englihs:**
+**English:**
 
 * 每日单词
 
@@ -98,6 +98,25 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 **课外：**
 
 * 集成学习Task03 赶着打卡，没有怎么深入学习，明天抽空深入了解
+
+## 3.23
+
+**LeetCode:**
+
+* 每日打卡  [341. 扁平化嵌套列表迭代器](https://leetcode-cn.com/problems/flatten-nested-list-iterator/)  知识点： 递归dfs、 栈和迭代
+* [50. Pow(x, n)](https://leetcode-cn.com/problems/powx-n/)  知识点：递归快速幂、 迭代快速幂。
+  *  递归快速幂： 递归调用栈空间 时间：O（nlogn） 空间：O（nlogn）
+  *  迭代快速幂： 时间：O（nlogn）  空间：O（1）
+* 
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210323214721.png)
+
+**English：**
+
+* 百词斩打卡
+* 墨墨打卡
+
+**课程：**
 
 
 
