@@ -1,7 +1,7 @@
 ---
 author: "xingyu"
 author_link: ""
-title: "IntegratedLearning_Task04"
+title: "集成学习_Task04"
 date: 2021-03-24T19:00:45+08:00
 lastmod: 2021-03-24T19:00:45+08:00
 draft: true
