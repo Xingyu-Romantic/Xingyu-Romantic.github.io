@@ -116,9 +116,19 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 * 百词斩打卡
 * 墨墨打卡
 
-**课程：**
+**其他：**
 
+* 安装UE4引擎，入门。
 
+## 3.24
+
+**LeetCode:**
+
+* 每日打卡 [456. 132 模式](https://leetcode-cn.com/problems/132-pattern/)  知识点：贪心暴力  +  单调栈
+
+**English:**
+
+* 
 
 
 
