@@ -141,6 +141,10 @@ LeetCode 动态规划汇总：https://leetcode-cn.com/circle/article/NfHhXD/
 
 * 百词斩打卡
 
+**其他：**
+
+* Jetson nano 组装
+
 
 
 
