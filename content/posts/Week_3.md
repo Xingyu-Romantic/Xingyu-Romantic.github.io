@@ -22,7 +22,7 @@ auto_collapse_toc: true
 math: true
 ---
 
-3.26 - 3.
+3.26 - 4.01
 
 <!--more-->
 
@@ -88,7 +88,7 @@ math: true
 
 * PaddleDetection 训练完毕。
 
-## 3.20
+## 3.30
 
 **Leetcode：**
 
@@ -96,7 +96,28 @@ math: true
 
 **English：**
 
+* 百词斩打卡
+* 墨墨单词打卡
 
+## 3.31
 
+**LeetCode:**
 
+* 每日打卡  [90. 子集 II](https://leetcode-cn.com/problems/subsets-ii/)  知识点：回朔， 深度拷贝
+
+**English:**
+
+* 百词斩打卡
+* 墨墨单词打卡
+
+## 4.1
+
+**LeetCode:**
+
+* 每日打卡 [1006. 笨阶乘](https://leetcode-cn.com/problems/clumsy-factorial/) 知识点：模拟  迭代
+
+**English：**
+
+* 百词斩打卡
+* 墨墨单词打卡
 
