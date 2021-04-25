@@ -4,7 +4,7 @@ author_link: ""
 title: "Gradient_Algorithm 梯度类算法"
 date: 2021-04-24T21:02:53+08:00
 lastmod: 2021-04-24T21:02:53+08:00
-draft: true
+draft: false
 description: ""
 show_in_homepage: true
 description_as_summary: false
