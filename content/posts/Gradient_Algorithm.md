@@ -75,6 +75,35 @@ $$
 
 令 $s^k=x^{k+1}-x^{k}$, $y^k=\nabla f(x^{k+1})-\nabla f(x^k)$ , 定义两种BB步长，$\displaystyle\frac{(s^k)^\top s^k}{(s^k)^\top y^k}$ 和 $\displaystyle\frac{(s^k)^\top y^k}{(y^k)^\top y^k}$。
 
+理论解释：
+
+如果我们记 $g^{k} = \bigtriangledown f(x^{(k)})$  和 $F^{k} = \bigtriangledown ^2f(x^{(k)})$， 那么**一阶方法**就是 $x^{k+1} = x^k - \alpha_kg(x^{(k)})$，其中步长$\alpha_k$是固定的，也可以使线搜索获得的，一阶方法简单但是收敛速度慢，**牛顿方法**就是$x^{(k+1)} = x^{(k)} - (F^{(k)})^{-1} g^{(k)}$ ，其收敛速度更快，但是海森矩阵计算代价较大，而**BB方法**就是用$\alpha_kg^{(k)}$来近似$(F^{(k)})^{-1}g^{(k)}$。
+
+定义 $s^k=x^{k+1}-x^{k}$ 和 $y^{(k-1)} = g^{(k)} - g^{(k-1)}$， 那么海森矩阵实际上就是
+$$
+F^{(k)}s^{(k-1)} = y^{(k-1)}
+$$
+用 $(a_kI)^{-1}$ 来近似 $F^{(k)}$， 那么就应该有
+$$
+(\alpha_kI)^{-1}s^{(k-1)} = y^{(k-1)}
+$$
+利用最小二乘法：
+$$
+\alpha_k^{-1} = \mathop{\arg\min}\limits_{\beta} \frac 12 ||s^{(k-1)}\beta - y ^{(k-1)}|| ^2 => \alpha_k^{1} = \displaystyle\frac{(s^{k-1})^\top s^{k-1}}{(s^{k-1})^\top y^{k-1}} \\
+\alpha_k = \mathop{\arg\min}\limits_{\alpha} \frac 12 ||s^{(k-1)}\beta - y ^{(k-1)}\alpha|| ^2 => \alpha_k^{2} = \displaystyle\frac{(s^{k-1})^\top y^{k-1}}{(y^{k-1})^\top y^{k-1}}
+$$
+**BB方法特点：**
+
+1. 几乎不需要额外的计算，但是往往会带来极大的性能收益
+2. 实际应用中两个表达式都可以用，甚至可以交换使用，但是优劣需结合具体问题
+3. 收敛性很难证明。
+
+退出搜索条件：$f(x^k+\tau d^k)\le C_k+\rho\tau (g^k)^\top d^k$  或 进行超过10次步长衰减后退出搜索。
+
+`FDiff`：表示函数值的相对变化
+
+`|XDiff|`：表示$x$与上一步迭代$xp$之前的相对变化。
+
 ### Huber 光滑梯度法
 
 将LASSO问题转化为光滑函数，
@@ -272,3 +301,5 @@ def LASSO_con(x0, A, b, mu0, opts):
 [为什么Ｌ１正则化导致稀疏解](https://blog.csdn.net/b876144622/article/details/81276818)
 
 [线搜索方法](https://blog.csdn.net/fangqingan_java/article/details/46405669)
+
+[凸优化笔记15：梯度下降法](https://zhuanlan.zhihu.com/p/137274399)
