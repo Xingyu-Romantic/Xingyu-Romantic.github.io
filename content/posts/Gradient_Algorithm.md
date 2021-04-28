@@ -46,9 +46,12 @@ $$
 $$
 则可以推导使用Ｌ１正则的导数
 $$
-\frac {\partial J_{L1}(w)}{\partial w}|_{w=0^-} = d_0 - \lambda \\
+\frac {\partial J_{L1}(w)}{\partial w}|_{w=0^-} = d_0 - \lambda
+$$
+$$
 \frac {\partial J_{L1}(w)}{\partial w}|_{w=0^+} = d_0 + \lambda
 $$
+
 引入Ｌ１正则后，代价函数在0处的导数有一个突变，从$d_0 + \lambda$ 到　$d_0 - \lambda$, 若　$d_0 + \lambda$ 和$d_0 - \lambda$异号，则在0处会是一个极小值点。因此，优化 时，可能优化到该极小值点上，即$w=0$处。
 
 ## LASSO 问题的梯度下降
@@ -89,9 +92,14 @@ $$
 $$
 利用最小二乘法：
 $$
-\alpha_k^{-1} = \mathop{\arg\min}\limits_{\beta} \frac 12 ||s^{(k-1)}\beta - y ^{(k-1)}|| ^2 => \alpha_k^{1} = \displaystyle\frac{(s^{k-1})^\top s^{k-1}}{(s^{k-1})^\top y^{k-1}} \\
+\alpha_k^{-1} = \mathop{\arg\min}\limits_{\beta} \frac 12 ||s^{(k-1)}\beta - y ^{(k-1)}|| ^2 => \alpha_k^{1} = \displaystyle\frac{(s^{k-1})^\top s^{k-1}}{(s^{k-1})^\top y^{k-1}}
+$$
+$$
 \alpha_k = \mathop{\arg\min}\limits_{\alpha} \frac 12 ||s^{(k-1)}\beta - y ^{(k-1)}\alpha|| ^2 => \alpha_k^{2} = \displaystyle\frac{(s^{k-1})^\top y^{k-1}}{(y^{k-1})^\top y^{k-1}}
 $$
+
+
+
 **BB方法特点：**
 
 1. 几乎不需要额外的计算，但是往往会带来极大的性能收益
@@ -148,6 +156,8 @@ $p_k$是一个下降方向，满足$\bigtriangledown f_kp_k \le  0$ ，则 $p_k 
 ## 总结
 
 对Matlab的代码采用Python重构，对算法的流程有了比较深入的了解，但是对示例代码进行运行时，生成的迭代次数-函数值图像，相比与网站中给出的同等Matlab生成图像更快的收敛。
+
+![](https://blog-1254266736.cos.ap-nanjing.myqcloud.com/img/20210425200817.png)
 
 ## 附录
 
